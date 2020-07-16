@@ -3,7 +3,7 @@ import seaborn as sns
 import matplotlib.pyplot as plt
 import numpy as np
 
-df_main = pd.read_csv('data/RTD_data_randomsample_20K.csv')
+df_main = pd.read_csv('../data/RTD_data_randomsample_20K.csv')
 
 print(df_main.describe())
 
