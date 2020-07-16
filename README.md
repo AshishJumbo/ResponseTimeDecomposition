@@ -6,7 +6,8 @@ AB<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 AG
 
-
+[link to the data]("https://drive.google.com/drive/folders/1fRhyVEetIsgRdp-B8J5seH64FCHC2HMI?usp=sharing")
+[NOTE: there are two files one preprocessed one regular]
 <h4>The following is the order of execution of the files in the project:</h4>
 <ol>
     <li>libreoffice_prep.py <br/>
