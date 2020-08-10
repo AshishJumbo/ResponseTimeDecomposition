@@ -62,29 +62,29 @@ def plotCharts(df, fig_width, fig_height, title):
     ax = sns.boxplot(x="action_action_pairs_time_taken", y="action_action_pairs", data=df)
 
     # Calculate number of obs per group & median to position labels
-    # labels = [label.get_text() for label in ax.get_yticklabels()]
-    # medians = df.groupby(['action_action_pairs'])['action_action_pairs_time_taken'].median().values
-    # value_counts = df['action_action_pairs'].value_counts()
-    # value_counts = value_counts.reindex(index=labels)
-    # # nobs = df['action_action_pairs'].value_counts().values
-    # # nobs2 = df['action_action_pairs'].value_counts().index.tolist()
-    # nobs = value_counts.values
-    # nobs2 = value_counts.index.tolist()
-    # print(title)
-    # print(value_counts)
-    # print('====================================================')
-    # nobs = [str(x) for x in nobs.tolist()]
-    # nobs = ["n: " + i for i in nobs]
-    #
-    # for tick in range(len(nobs)):
-    #     # idx = nobs2.index(labels[tick].get_text())
-    #
-    #     print(labels[tick].get_text(), medians[tick], len(nobs) - tick - 1, nobs[tick])
-    #     ax.text(medians[tick], len(nobs) - tick - 1, nobs[tick],
-    #             horizontalalignment='center', size='x-small', color='b', weight='semibold', bbox=dict(boxstyle="round",
-    #                                                                                                   ec=(1., 0.5, 0.5),
-    #                                                                                                   fc=(1., 0.8, 0.8),
-    #                                                                                                   ))
+    labels = [label.get_text() for label in ax.get_yticklabels()]
+    medians = df.groupby(['action_action_pairs'])['action_action_pairs_time_taken'].median().values
+    value_counts = df['action_action_pairs'].value_counts()
+    value_counts = value_counts.reindex(index=labels)
+    # nobs = df['action_action_pairs'].value_counts().values
+    # nobs2 = df['action_action_pairs'].value_counts().index.tolist()
+    nobs = value_counts.values
+    nobs2 = value_counts.index.tolist()
+    print(title)
+    print(value_counts)
+    print('====================================================')
+    nobs = [str(x) for x in nobs.tolist()]
+    nobs = ["n: " + i for i in nobs]
+
+    for tick in range(len(nobs)):
+        # idx = nobs2.index(labels[tick].get_text())
+
+        print(labels[tick].get_text(), medians[tick], len(nobs) - tick - 1, nobs[tick])
+        ax.text(medians[tick], len(nobs) - tick - 1, nobs[tick],
+                horizontalalignment='center', size='x-small', color='b', weight='semibold', bbox=dict(boxstyle="round",
+                                                                                                      ec=(1., 0.5, 0.5),
+                                                                                                      fc=(1., 0.8, 0.8),
+                                                                                                      ))
 
     # sns.plt.show()
     plt.title("box-plot: " + title)
