@@ -4,12 +4,54 @@ import matplotlib.pyplot as plt
 import numpy as np
 from scipy import stats
 from sklearn.mixture import GaussianMixture
+from bs4 import BeautifulSoup
+import re
 
 # NOTE: the same as the other file only instead of randomly winzorising the data we are taking logs and z-scoring
 #  them to have an easier time justifying things later on
 df_main = pd.read_csv('../data/RTD_data_randomsample_20K_new.csv')
 df_hint_info = pd.read_csv("../data/hint_infos.csv")
 
+
+def hint_body_clean_script():
+    hint_bodies = df_hint_info.hint_body
+    hint_bodies_clean = []
+    hint_bodies_clean2 = []
+    for hint_body in hint_bodies:
+        soup = BeautifulSoup(hint_body, features="html.parser")
+        # # kill all script and style elements
+        # for script in soup(["script", "style"]):
+        #     script.extract()  # rip it out
+
+        # get text
+        text = soup.get_text()
+        text = text.replace("\n", " ")
+
+        # # break into lines and remove leading and trailing space on each
+        # lines = (line.strip() for line in text.splitlines())
+        # # break multi-headlines into a line each
+        # chunks = (phrase.strip() for line in lines for phrase in line.split("  "))
+        # # drop blank lines
+        # text = "\n".join(chunk for chunk in chunks if chunk)
+        hint_bodies_clean.append(text)
+        hint_body = re.sub('<[^<]+?>', '', hint_body)
+        hint_body = hint_body.replace("\n", " ")
+        hint_bodies_clean2.append(hint_body)
+
+    df_hint_info["hint_body_clean"] = hint_bodies_clean
+    df_hint_info["hint_body_clean2"] = hint_bodies_clean2
+    df_hint_info["hint_body_length"] = df_hint_info['hint_body_clean'].str.len()
+    df_hint_info["hint_body_has_table"] = df_hint_info['hint_body'].str.contains("tbody")
+    df_hint_info["hint_body_td_count"] = df_hint_info['hint_body'].str.contains("<td")
+    df_hint_info["hint_body_wiris_count"] = df_hint_info['hint_body'].str.contains("Wirisformula")
+    df_hint_info["hint_body_has_wiris"] = df_hint_info['hint_body'].str.contains("wiris")
+    df_hint_info["hint_body_word_count"] = df_hint_info.hint_body_clean.str.split().str.len()
+    df_hint_info["hint_body_word_count2"] = df_hint_info.hint_body_clean2.str.split().str.len() + \
+                                            df_hint_info.hint_body_td_count + df_hint_info.hint_body_wiris_count
+
+
+hint_body_clean_script()
+df_hint_info.to_csv("../data/hint_infos_clean.csv")
 print(df_main.describe())
 
 # # PS level action don't have a PR associated with them
@@ -760,3 +802,302 @@ plt.title("31.1 hint_attempt_video vs hint_attempt_video_correct vs hint_attempt
 plt.show()
 
 print("============================================================================================")
+
+quartiles = all_hint_hint_is_txt.hint_body_word_count2.quantile([0.25,0.5,0.75])
+
+# q1= 95, q2= 137, q3= 183
+all_hint_hint_is_txt_0_q1 = all_hint_hint_is_txt[all_hint_hint_is_txt.hint_body_word_count2 <= quartiles[0.25]]
+all_hint_hint_is_txt_q1_q2 = all_hint_hint_is_txt[
+    (all_hint_hint_is_txt.hint_body_word_count2 > quartiles[0.25]) & (all_hint_hint_is_txt.hint_body_word_count2 <= quartiles[0.5])]
+all_hint_hint_is_txt_q2_q3 = all_hint_hint_is_txt[
+    (all_hint_hint_is_txt.hint_body_word_count2 > quartiles[0.5]) & (all_hint_hint_is_txt.hint_body_word_count2 <= quartiles[0.75])]
+all_hint_hint_is_txt_q3_q4 = all_hint_hint_is_txt[(all_hint_hint_is_txt.hint_body_word_count2 > quartiles[0.75])]
+
+sns.distplot(all_hint_hint_is_txt.log_action_action_pairs_time_taken.values, hist=False, kde=True, rug=False,
+             label="all_hint_hint_is_txt: " + str(len(all_hint_hint_is_txt)))
+sns.distplot(all_hint_hint_is_txt_0_q1.log_action_action_pairs_time_taken.values, hist=False, kde=True, rug=False,
+             label="all_hint_hint_is_txt_0_q1: " + str(len(all_hint_hint_is_txt_0_q1)))
+sns.distplot(all_hint_hint_is_txt_q1_q2.log_action_action_pairs_time_taken.values, hist=False, kde=True, rug=False,
+             label="all_hint_hint_is_txt_q1_q2: " + str(len(all_hint_hint_is_txt_q1_q2)))
+sns.distplot(all_hint_hint_is_txt_q2_q3.log_action_action_pairs_time_taken.values, hist=False, kde=True, rug=False,
+             label="all_hint_hint_is_txt_q2_q3: " + str(len(all_hint_hint_is_txt_q2_q3)))
+sns.distplot(all_hint_hint_is_txt_q3_q4.log_action_action_pairs_time_taken.values, hist=False, kde=True, rug=False,
+             label="all_hint_hint_is_txt_q3_q4: " + str(len(all_hint_hint_is_txt_q3_q4)))
+plt.legend()
+plt.title("32. Breaking down all_hint_hint with length of the hint by incorporating attempts[depth: 2] as well in \n"
+          "actual time > 1.5, z-score[-3,3] vs hint_hint with video vs txt")
+plt.show()
+
+print("=========================================================================================================")
+print(all_hint_hint_is_txt.hint_body_has_table.value_counts())
+print(all_hint_hint_is_txt_0_q1.hint_body_has_table.value_counts())
+print(all_hint_hint_is_txt_q1_q2.hint_body_has_table.value_counts())
+print(all_hint_hint_is_txt_q2_q3.hint_body_has_table.value_counts())
+print(all_hint_hint_is_txt_q3_q4.hint_body_has_table.value_counts())
+print(all_hint_hint_is_txt_0_q1.hint_body_has_wiris.value_counts())
+print(all_hint_hint_is_txt_q1_q2.hint_body_has_wiris.value_counts())
+print(all_hint_hint_is_txt_q2_q3.hint_body_has_wiris.value_counts())
+print(all_hint_hint_is_txt_q3_q4.hint_body_has_wiris.value_counts())
+print("=========================================================================================================")
+
+quartiles2 = all_hint_hint_is_txt.hint_body_word_count2.quantile([0.25,0.5,0.75])
+
+# q1= 95, q2= 134, q3= 191
+hint_hint_is_txt_0_q1 = hint_hint_is_txt[hint_hint_is_txt.hint_body_word_count2 <= quartiles2[0.25]]
+hint_hint_is_txt_q1_q2 = hint_hint_is_txt[
+    (hint_hint_is_txt.hint_body_word_count2 > quartiles2[0.25]) & (hint_hint_is_txt.hint_body_word_count2 <= quartiles2[0.5])]
+hint_hint_is_txt_q2_q3 = hint_hint_is_txt[
+    (hint_hint_is_txt.hint_body_word_count2 > quartiles2[0.5]) & (hint_hint_is_txt.hint_body_word_count2 <= quartiles2[0.75])]
+hint_hint_is_txt_q3_q4 = hint_hint_is_txt[(hint_hint_is_txt.hint_body_word_count2 > quartiles2[0.75])]
+
+sns.distplot(hint_hint_is_txt.log_action_action_pairs_time_taken.values, hist=False, kde=True, rug=False,
+             label="hint_hint_is_txt: " + str(len(hint_hint_is_txt)))
+sns.distplot(hint_hint_is_txt_0_q1.log_action_action_pairs_time_taken.values, hist=False, kde=True, rug=False,
+             label="hint_hint_is_txt_0_q1: " + str(len(hint_hint_is_txt_0_q1)))
+sns.distplot(hint_hint_is_txt_q1_q2.log_action_action_pairs_time_taken.values, hist=False, kde=True, rug=False,
+             label="hint_hint_is_txt_q1_q2: " + str(len(hint_hint_is_txt_q1_q2)))
+sns.distplot(hint_hint_is_txt_q2_q3.log_action_action_pairs_time_taken.values, hist=False, kde=True, rug=False,
+             label="hint_hint_is_txt_q2_q3: " + str(len(hint_hint_is_txt_q2_q3)))
+sns.distplot(hint_hint_is_txt_q3_q4.log_action_action_pairs_time_taken.values, hist=False, kde=True, rug=False,
+             label="hint_hint_is_txt_q3_q4: " + str(len(hint_hint_is_txt_q3_q4)))
+plt.legend()
+plt.title("32.1 Breaking down hint_hint with length of the hint by incorporating attempts[depth: 2] as well in \n"
+          "actual time > 1.5, z-score[-3,3] vs hint_hint with video vs txt")
+plt.show()
+
+print("=========================================================================================================")
+print(hint_hint_is_txt.hint_body_has_table.value_counts())
+print(hint_hint_is_txt_0_q1.hint_body_has_table.value_counts())
+print(hint_hint_is_txt_q1_q2.hint_body_has_table.value_counts())
+print(hint_hint_is_txt_q2_q3.hint_body_has_table.value_counts())
+print(hint_hint_is_txt_q3_q4.hint_body_has_table.value_counts())
+print(hint_hint_is_txt_0_q1.hint_body_has_wiris.value_counts())
+print(hint_hint_is_txt_q1_q2.hint_body_has_wiris.value_counts())
+print(hint_hint_is_txt_q2_q3.hint_body_has_wiris.value_counts())
+print(hint_hint_is_txt_q3_q4.hint_body_has_wiris.value_counts())
+print("=========================================================================================================")
+
+print("============================================================================================")
+
+quartiles = all_hint_attempt_is_txt.hint_body_word_count2.quantile([0.25,0.5,0.75])
+
+# q1= 95, q2= 137, q3= 183
+all_hint_attempt_is_txt_0_q1 = all_hint_attempt_is_txt[all_hint_attempt_is_txt.hint_body_word_count2 <= quartiles[0.25]]
+all_hint_attempt_is_txt_q1_q2 = all_hint_attempt_is_txt[
+    (all_hint_attempt_is_txt.hint_body_word_count2 > quartiles[0.25]) & (all_hint_attempt_is_txt.hint_body_word_count2 <= quartiles[0.5])]
+all_hint_attempt_is_txt_q2_q3 = all_hint_attempt_is_txt[
+    (all_hint_attempt_is_txt.hint_body_word_count2 > quartiles[0.5]) & (all_hint_attempt_is_txt.hint_body_word_count2 <= quartiles[0.75])]
+all_hint_attempt_is_txt_q3_q4 = all_hint_attempt_is_txt[(all_hint_attempt_is_txt.hint_body_word_count2 > quartiles[0.75])]
+
+sns.distplot(all_hint_attempt_is_txt.log_action_action_pairs_time_taken.values, hist=False, kde=True, rug=False,
+             label="all_hint_attempt_is_txt: " + str(len(all_hint_attempt_is_txt)))
+sns.distplot(all_hint_attempt_is_txt_0_q1.log_action_action_pairs_time_taken.values, hist=False, kde=True, rug=False,
+             label="all_hint_attempt_is_txt_0_q1: " + str(len(all_hint_attempt_is_txt_0_q1)))
+sns.distplot(all_hint_attempt_is_txt_q1_q2.log_action_action_pairs_time_taken.values, hist=False, kde=True, rug=False,
+             label="all_hint_attempt_is_txt_q1_q2: " + str(len(all_hint_attempt_is_txt_q1_q2)))
+sns.distplot(all_hint_attempt_is_txt_q2_q3.log_action_action_pairs_time_taken.values, hist=False, kde=True, rug=False,
+             label="all_hint_attempt_is_txt_q2_q3: " + str(len(all_hint_attempt_is_txt_q2_q3)))
+sns.distplot(all_hint_attempt_is_txt_q3_q4.log_action_action_pairs_time_taken.values, hist=False, kde=True, rug=False,
+             label="all_hint_attempt_is_txt_q3_q4: " + str(len(all_hint_attempt_is_txt_q3_q4)))
+plt.legend()
+plt.title("33. Breaking down all_hint_hint with length of the hint by incorporating attempts[depth: 2] as well in \n"
+          "actual time > 1.5, z-score[-3,3] vs hint_hint with video vs txt")
+plt.show()
+
+print("=========================================================================================================")
+print(all_hint_attempt_is_txt.hint_body_has_table.value_counts())
+print(all_hint_attempt_is_txt_0_q1.hint_body_has_table.value_counts())
+print(all_hint_attempt_is_txt_q1_q2.hint_body_has_table.value_counts())
+print(all_hint_attempt_is_txt_q2_q3.hint_body_has_table.value_counts())
+print(all_hint_attempt_is_txt_q3_q4.hint_body_has_table.value_counts())
+print(all_hint_attempt_is_txt_0_q1.hint_body_has_wiris.value_counts())
+print(all_hint_attempt_is_txt_q1_q2.hint_body_has_wiris.value_counts())
+print(all_hint_attempt_is_txt_q2_q3.hint_body_has_wiris.value_counts())
+print(all_hint_attempt_is_txt_q3_q4.hint_body_has_wiris.value_counts())
+print("=========================================================================================================")
+
+quartiles2 = hint_attempt_is_txt.hint_body_word_count2.quantile([0.25,0.5,0.75])
+
+# q1= 95, q2= 134, q3= 191
+hint_attempt_is_txt_0_q1 = hint_attempt_is_txt[hint_attempt_is_txt.hint_body_word_count2 <= quartiles2[0.25]]
+hint_attempt_is_txt_q1_q2 = hint_attempt_is_txt[
+    (hint_attempt_is_txt.hint_body_word_count2 > quartiles2[0.25]) & (hint_attempt_is_txt.hint_body_word_count2 <= quartiles2[0.5])]
+hint_attempt_is_txt_q2_q3 = hint_attempt_is_txt[
+    (hint_attempt_is_txt.hint_body_word_count2 > quartiles2[0.5]) & (hint_attempt_is_txt.hint_body_word_count2 <= quartiles2[0.75])]
+hint_attempt_is_txt_q3_q4 = hint_attempt_is_txt[(hint_attempt_is_txt.hint_body_word_count2 > quartiles2[0.75])]
+
+sns.distplot(hint_attempt_is_txt.log_action_action_pairs_time_taken.values, hist=False, kde=True, rug=False,
+             label="hint_attempt_is_txt: " + str(len(hint_attempt_is_txt)))
+sns.distplot(hint_attempt_is_txt_0_q1.log_action_action_pairs_time_taken.values, hist=False, kde=True, rug=False,
+             label="hint_attempt_is_txt_0_q1: " + str(len(hint_attempt_is_txt_0_q1)))
+sns.distplot(hint_attempt_is_txt_q1_q2.log_action_action_pairs_time_taken.values, hist=False, kde=True, rug=False,
+             label="hint_attempt_is_txt_q1_q2: " + str(len(hint_attempt_is_txt_q1_q2)))
+sns.distplot(hint_attempt_is_txt_q2_q3.log_action_action_pairs_time_taken.values, hist=False, kde=True, rug=False,
+             label="hint_attempt_is_txt_q2_q3: " + str(len(hint_attempt_is_txt_q2_q3)))
+sns.distplot(hint_attempt_is_txt_q3_q4.log_action_action_pairs_time_taken.values, hist=False, kde=True, rug=False,
+             label="hint_attempt_is_txt_q3_q4: " + str(len(hint_attempt_is_txt_q3_q4)))
+plt.legend()
+plt.title("33.1 Breaking down hint_hint with length of the hint by incorporating attempts[depth: 2] as well in \n"
+          "actual time > 1.5, z-score[-3,3] vs hint_hint with video vs txt")
+plt.show()
+
+print("=========================================================================================================")
+print(hint_attempt_is_txt.hint_body_has_table.value_counts())
+print(hint_attempt_is_txt_0_q1.hint_body_has_table.value_counts())
+print(hint_attempt_is_txt_q1_q2.hint_body_has_table.value_counts())
+print(hint_attempt_is_txt_q2_q3.hint_body_has_table.value_counts())
+print(hint_attempt_is_txt_q3_q4.hint_body_has_table.value_counts())
+print(hint_attempt_is_txt_0_q1.hint_body_has_wiris.value_counts())
+print(hint_attempt_is_txt_q1_q2.hint_body_has_wiris.value_counts())
+print(hint_attempt_is_txt_q2_q3.hint_body_has_wiris.value_counts())
+print(hint_attempt_is_txt_q3_q4.hint_body_has_wiris.value_counts())
+print("=========================================================================================================")
+
+quartiles2 = hint_attempt_is_txt_correct.hint_body_word_count2.quantile([0.25,0.5,0.75])
+
+# q1= 95, q2= 134, q3= 191
+hint_attempt_is_txt_correct_0_q1 = hint_attempt_is_txt_correct[hint_attempt_is_txt_correct.hint_body_word_count2 <= quartiles2[0.25]]
+hint_attempt_is_txt_correct_q1_q2 = hint_attempt_is_txt_correct[
+    (hint_attempt_is_txt_correct.hint_body_word_count2 > quartiles2[0.25]) & (hint_attempt_is_txt_correct.hint_body_word_count2 <= quartiles2[0.5])]
+hint_attempt_is_txt_correct_q2_q3 = hint_attempt_is_txt_correct[
+    (hint_attempt_is_txt_correct.hint_body_word_count2 > quartiles2[0.5]) & (hint_attempt_is_txt_correct.hint_body_word_count2 <= quartiles2[0.75])]
+hint_attempt_is_txt_correct_q3_q4 = hint_attempt_is_txt_correct[(hint_attempt_is_txt_correct.hint_body_word_count2 > quartiles2[0.75])]
+
+sns.distplot(hint_attempt_is_txt_correct.log_action_action_pairs_time_taken.values, hist=False, kde=True, rug=False,
+             label="hint_attempt_is_txt_correct: " + str(len(hint_attempt_is_txt_correct)))
+sns.distplot(hint_attempt_is_txt_correct_0_q1.log_action_action_pairs_time_taken.values, hist=False, kde=True, rug=False,
+             label="hint_attempt_is_txt_correct_0_q1: " + str(len(hint_attempt_is_txt_correct_0_q1)))
+sns.distplot(hint_attempt_is_txt_correct_q1_q2.log_action_action_pairs_time_taken.values, hist=False, kde=True, rug=False,
+             label="hint_attempt_is_txt_correct_q1_q2: " + str(len(hint_attempt_is_txt_correct_q1_q2)))
+sns.distplot(hint_attempt_is_txt_correct_q2_q3.log_action_action_pairs_time_taken.values, hist=False, kde=True, rug=False,
+             label="hint_attempt_is_txt_correct_q2_q3: " + str(len(hint_attempt_is_txt_correct_q2_q3)))
+sns.distplot(hint_attempt_is_txt_correct_q3_q4.log_action_action_pairs_time_taken.values, hist=False, kde=True, rug=False,
+             label="hint_attempt_is_txt_correct_q3_q4: " + str(len(hint_attempt_is_txt_correct_q3_q4)))
+plt.legend()
+plt.title("33.2 Breaking down hint_hint with length of the hint by incorporating attempts[depth: 2] as well in \n"
+          "actual time > 1.5, z-score[-3,3] vs hint_hint with video vs txt")
+plt.show()
+
+print("=========================================================================================================")
+print(hint_attempt_is_txt_correct.hint_body_has_table.value_counts())
+print(hint_attempt_is_txt_correct_0_q1.hint_body_has_table.value_counts())
+print(hint_attempt_is_txt_correct_q1_q2.hint_body_has_table.value_counts())
+print(hint_attempt_is_txt_correct_q2_q3.hint_body_has_table.value_counts())
+print(hint_attempt_is_txt_correct_q3_q4.hint_body_has_table.value_counts())
+print(hint_attempt_is_txt_correct_0_q1.hint_body_has_wiris.value_counts())
+print(hint_attempt_is_txt_correct_q1_q2.hint_body_has_wiris.value_counts())
+print(hint_attempt_is_txt_correct_q2_q3.hint_body_has_wiris.value_counts())
+print(hint_attempt_is_txt_correct_q3_q4.hint_body_has_wiris.value_counts())
+print("=========================================================================================================")
+
+quartiles2 = all_hint_attempt_is_txt_correct.hint_body_word_count2.quantile([0.25,0.5,0.75])
+
+# q1= 95, q2= 134, q3= 191
+all_hint_attempt_is_txt_correct_0_q1 = all_hint_attempt_is_txt_correct[all_hint_attempt_is_txt_correct.hint_body_word_count2 <= quartiles2[0.25]]
+all_hint_attempt_is_txt_correct_q1_q2 = all_hint_attempt_is_txt_correct[
+    (all_hint_attempt_is_txt_correct.hint_body_word_count2 > quartiles2[0.25]) & (all_hint_attempt_is_txt_correct.hint_body_word_count2 <= quartiles2[0.5])]
+all_hint_attempt_is_txt_correct_q2_q3 = all_hint_attempt_is_txt_correct[
+    (all_hint_attempt_is_txt_correct.hint_body_word_count2 > quartiles2[0.5]) & (all_hint_attempt_is_txt_correct.hint_body_word_count2 <= quartiles2[0.75])]
+all_hint_attempt_is_txt_correct_q3_q4 = all_hint_attempt_is_txt_correct[(all_hint_attempt_is_txt_correct.hint_body_word_count2 > quartiles2[0.75])]
+
+sns.distplot(all_hint_attempt_is_txt_correct.log_action_action_pairs_time_taken.values, hist=False, kde=True, rug=False,
+             label="all_hint_attempt_is_txt_correct: " + str(len(all_hint_attempt_is_txt_correct)))
+sns.distplot(all_hint_attempt_is_txt_correct_0_q1.log_action_action_pairs_time_taken.values, hist=False, kde=True, rug=False,
+             label="all_hint_attempt_is_txt_correct_0_q1: " + str(len(all_hint_attempt_is_txt_correct_0_q1)))
+sns.distplot(all_hint_attempt_is_txt_correct_q1_q2.log_action_action_pairs_time_taken.values, hist=False, kde=True, rug=False,
+             label="all_hint_attempt_is_txt_correct_q1_q2: " + str(len(all_hint_attempt_is_txt_correct_q1_q2)))
+sns.distplot(all_hint_attempt_is_txt_correct_q2_q3.log_action_action_pairs_time_taken.values, hist=False, kde=True, rug=False,
+             label="all_hint_attempt_is_txt_correct_q2_q3: " + str(len(all_hint_attempt_is_txt_correct_q2_q3)))
+sns.distplot(all_hint_attempt_is_txt_correct_q3_q4.log_action_action_pairs_time_taken.values, hist=False, kde=True, rug=False,
+             label="all_hint_attempt_is_txt_correct_q3_q4: " + str(len(all_hint_attempt_is_txt_correct_q3_q4)))
+plt.legend()
+plt.title("33.3 Breaking down hint_hint with length of the hint by incorporating attempts[depth: 2] as well in \n"
+          "actual time > 1.5, z-score[-3,3] vs hint_hint with video vs txt")
+plt.show()
+
+print("=========================================================================================================")
+print(all_hint_attempt_is_txt_correct.hint_body_has_table.value_counts())
+print(all_hint_attempt_is_txt_correct_0_q1.hint_body_has_table.value_counts())
+print(all_hint_attempt_is_txt_correct_q1_q2.hint_body_has_table.value_counts())
+print(all_hint_attempt_is_txt_correct_q2_q3.hint_body_has_table.value_counts())
+print(all_hint_attempt_is_txt_correct_q3_q4.hint_body_has_table.value_counts())
+print(all_hint_attempt_is_txt_correct_0_q1.hint_body_has_wiris.value_counts())
+print(all_hint_attempt_is_txt_correct_q1_q2.hint_body_has_wiris.value_counts())
+print(all_hint_attempt_is_txt_correct_q2_q3.hint_body_has_wiris.value_counts())
+print(all_hint_attempt_is_txt_correct_q3_q4.hint_body_has_wiris.value_counts())
+print("=========================================================================================================")
+
+
+quartiles2 = hint_attempt_is_txt_incorrect.hint_body_word_count2.quantile([0.25,0.5,0.75])
+
+# q1= 95, q2= 134, q3= 191
+hint_attempt_is_txt_incorrect_0_q1 = hint_attempt_is_txt_incorrect[hint_attempt_is_txt_incorrect.hint_body_word_count2 <= quartiles2[0.25]]
+hint_attempt_is_txt_incorrect_q1_q2 = hint_attempt_is_txt_incorrect[
+    (hint_attempt_is_txt_incorrect.hint_body_word_count2 > quartiles2[0.25]) & (hint_attempt_is_txt_incorrect.hint_body_word_count2 <= quartiles2[0.5])]
+hint_attempt_is_txt_incorrect_q2_q3 = hint_attempt_is_txt_incorrect[
+    (hint_attempt_is_txt_incorrect.hint_body_word_count2 > quartiles2[0.5]) & (hint_attempt_is_txt_incorrect.hint_body_word_count2 <= quartiles2[0.75])]
+hint_attempt_is_txt_incorrect_q3_q4 = hint_attempt_is_txt_incorrect[(hint_attempt_is_txt_incorrect.hint_body_word_count2 > quartiles2[0.75])]
+
+sns.distplot(hint_attempt_is_txt_incorrect.log_action_action_pairs_time_taken.values, hist=False, kde=True, rug=False,
+             label="hint_attempt_is_txt_incorrect: " + str(len(hint_attempt_is_txt_incorrect)))
+sns.distplot(hint_attempt_is_txt_incorrect_0_q1.log_action_action_pairs_time_taken.values, hist=False, kde=True, rug=False,
+             label="hint_attempt_is_txt_incorrect_0_q1: " + str(len(hint_attempt_is_txt_incorrect_0_q1)))
+sns.distplot(hint_attempt_is_txt_incorrect_q1_q2.log_action_action_pairs_time_taken.values, hist=False, kde=True, rug=False,
+             label="hint_attempt_is_txt_incorrect_q1_q2: " + str(len(hint_attempt_is_txt_incorrect_q1_q2)))
+sns.distplot(hint_attempt_is_txt_incorrect_q2_q3.log_action_action_pairs_time_taken.values, hist=False, kde=True, rug=False,
+             label="hint_attempt_is_txt_incorrect_q2_q3: " + str(len(hint_attempt_is_txt_incorrect_q2_q3)))
+sns.distplot(hint_attempt_is_txt_incorrect_q3_q4.log_action_action_pairs_time_taken.values, hist=False, kde=True, rug=False,
+             label="hint_attempt_is_txt_incorrect_q3_q4: " + str(len(hint_attempt_is_txt_incorrect_q3_q4)))
+plt.legend()
+plt.title("33.4 Breaking down hint_hint with length of the hint by incorporating attempts[depth: 2] as well in \n"
+          "actual time > 1.5, z-score[-3,3] vs hint_hint with video vs txt")
+plt.show()
+
+print("=========================================================================================================")
+print(hint_attempt_is_txt_incorrect.hint_body_has_table.value_counts())
+print(hint_attempt_is_txt_incorrect_0_q1.hint_body_has_table.value_counts())
+print(hint_attempt_is_txt_incorrect_q1_q2.hint_body_has_table.value_counts())
+print(hint_attempt_is_txt_incorrect_q2_q3.hint_body_has_table.value_counts())
+print(hint_attempt_is_txt_incorrect_q3_q4.hint_body_has_table.value_counts())
+print(hint_attempt_is_txt_incorrect_0_q1.hint_body_has_wiris.value_counts())
+print(hint_attempt_is_txt_incorrect_q1_q2.hint_body_has_wiris.value_counts())
+print(hint_attempt_is_txt_incorrect_q2_q3.hint_body_has_wiris.value_counts())
+print(hint_attempt_is_txt_incorrect_q3_q4.hint_body_has_wiris.value_counts())
+print("=========================================================================================================")
+
+quartiles2 = all_hint_attempt_is_txt_incorrect.hint_body_word_count2.quantile([0.25,0.5,0.75])
+
+# q1= 95, q2= 134, q3= 191
+all_hint_attempt_is_txt_incorrect_0_q1 = all_hint_attempt_is_txt_incorrect[all_hint_attempt_is_txt_incorrect.hint_body_word_count2 <= quartiles2[0.25]]
+all_hint_attempt_is_txt_incorrect_q1_q2 = all_hint_attempt_is_txt_incorrect[
+    (all_hint_attempt_is_txt_incorrect.hint_body_word_count2 > quartiles2[0.25]) & (all_hint_attempt_is_txt_incorrect.hint_body_word_count2 <= quartiles2[0.5])]
+all_hint_attempt_is_txt_incorrect_q2_q3 = all_hint_attempt_is_txt_incorrect[
+    (all_hint_attempt_is_txt_incorrect.hint_body_word_count2 > quartiles2[0.5]) & (all_hint_attempt_is_txt_incorrect.hint_body_word_count2 <= quartiles2[0.75])]
+all_hint_attempt_is_txt_incorrect_q3_q4 = all_hint_attempt_is_txt_incorrect[(all_hint_attempt_is_txt_incorrect.hint_body_word_count2 > quartiles2[0.75])]
+
+sns.distplot(all_hint_attempt_is_txt_incorrect.log_action_action_pairs_time_taken.values, hist=False, kde=True, rug=False,
+             label="all_hint_attempt_is_txt_incorrect: " + str(len(all_hint_attempt_is_txt_incorrect)))
+sns.distplot(all_hint_attempt_is_txt_incorrect_0_q1.log_action_action_pairs_time_taken.values, hist=False, kde=True, rug=False,
+             label="all_hint_attempt_is_txt_incorrect_0_q1: " + str(len(all_hint_attempt_is_txt_incorrect_0_q1)))
+sns.distplot(all_hint_attempt_is_txt_incorrect_q1_q2.log_action_action_pairs_time_taken.values, hist=False, kde=True, rug=False,
+             label="all_hint_attempt_is_txt_incorrect_q1_q2: " + str(len(all_hint_attempt_is_txt_incorrect_q1_q2)))
+sns.distplot(all_hint_attempt_is_txt_incorrect_q2_q3.log_action_action_pairs_time_taken.values, hist=False, kde=True, rug=False,
+             label="all_hint_attempt_is_txt_incorrect_q2_q3: " + str(len(all_hint_attempt_is_txt_incorrect_q2_q3)))
+sns.distplot(all_hint_attempt_is_txt_incorrect_q3_q4.log_action_action_pairs_time_taken.values, hist=False, kde=True, rug=False,
+             label="all_hint_attempt_is_txt_incorrect_q3_q4: " + str(len(all_hint_attempt_is_txt_incorrect_q3_q4)))
+plt.legend()
+plt.title("33.5 Breaking down hint_hint with length of the hint by incorporating attempts[depth: 2] as well in \n"
+          "actual time > 1.5, z-score[-3,3] vs hint_hint with video vs txt")
+plt.show()
+
+print("=========================================================================================================")
+print(all_hint_attempt_is_txt_incorrect.hint_body_has_table.value_counts())
+print(all_hint_attempt_is_txt_incorrect_0_q1.hint_body_has_table.value_counts())
+print(all_hint_attempt_is_txt_incorrect_q1_q2.hint_body_has_table.value_counts())
+print(all_hint_attempt_is_txt_incorrect_q2_q3.hint_body_has_table.value_counts())
+print(all_hint_attempt_is_txt_incorrect_q3_q4.hint_body_has_table.value_counts())
+print(all_hint_attempt_is_txt_incorrect_0_q1.hint_body_has_wiris.value_counts())
+print(all_hint_attempt_is_txt_incorrect_q1_q2.hint_body_has_wiris.value_counts())
+print(all_hint_attempt_is_txt_incorrect_q2_q3.hint_body_has_wiris.value_counts())
+print(all_hint_attempt_is_txt_incorrect_q3_q4.hint_body_has_wiris.value_counts())
+print("=========================================================================================================")
