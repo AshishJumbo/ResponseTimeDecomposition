@@ -19,6 +19,7 @@ def hint_body_clean_script():
     hint_bodies_clean2 = []
     for hint_body in hint_bodies:
         soup = BeautifulSoup(hint_body, features="html.parser")
+        # soup = BeautifulSoup(soup.prettify(formatter=lambda s: s.replace(u'\xa0', ' ')), features="html.parser")
         # # kill all script and style elements
         # for script in soup(["script", "style"]):
         #     script.extract()  # rip it out
@@ -36,6 +37,9 @@ def hint_body_clean_script():
         hint_bodies_clean.append(text)
         hint_body = re.sub('<[^<]+?>', '', hint_body)
         hint_body = hint_body.replace("\n", " ")
+        hint_body = hint_body.replace(u'\xa0', " ")
+        hint_body = hint_body.replace("&nbsp;", ' ')
+        hint_body = ' '.join(hint_body.split())
         hint_bodies_clean2.append(hint_body)
 
     df_hint_info["hint_body_clean"] = hint_bodies_clean
@@ -51,7 +55,7 @@ def hint_body_clean_script():
 
 
 hint_body_clean_script()
-df_hint_info.to_csv("../data/hint_infos_clean.csv")
+df_hint_info.to_csv("../data/hint_infos_clean.csv", index=False)
 print(df_main.describe())
 
 # # PS level action don't have a PR associated with them
@@ -567,14 +571,24 @@ print("==========================================merging with hint_info=========
 all_hint_hint_["manifest_details"] = all_hint_hint_["manifest_details"].astype(int)
 all_hint_hint_ = all_hint_hint_.merge(df_hint_info, on="manifest_details", how="left")
 
+all_hint_hint_.to_csv("../data/all_hint_hint_GMM.csv", index=False)
+
 all_hint_attempt["manifest_details"] = all_hint_attempt["manifest_details"].astype(int)
 all_hint_attempt = all_hint_attempt.merge(df_hint_info, on="manifest_details", how="left")
+all_hint_attempt.to_csv("../data/all_hint_attempt_GMM.csv", index=False)
+
+
 
 hint_hint["manifest_details"] = hint_hint["manifest_details"].astype(int)
 hint_hint = hint_hint.merge(df_hint_info, on="manifest_details", how="left")
 
+hint_hint.to_csv("../data/hint_hint_GMM.csv", index=False)
+
 hint_attempt["manifest_details"] = hint_attempt["manifest_details"].astype(int)
 hint_attempt = hint_attempt.merge(df_hint_info, on="manifest_details", how="left")
+hint_attempt.to_csv("../data/hint_attempt_GMM.csv", index=False)
+
+
 
 all_hint_attempt_is_video = all_hint_attempt[all_hint_attempt.is_video == 1]
 all_hint_attempt_is_txt = all_hint_attempt[all_hint_attempt.is_video == 0]
@@ -881,6 +895,9 @@ print("=========================================================================
 
 quartiles = all_hint_attempt_is_txt.hint_body_word_count2.quantile([0.25,0.5,0.75])
 
+print(quartiles)
+print("============================================================================================")
+
 # q1= 95, q2= 137, q3= 183
 all_hint_attempt_is_txt_0_q1 = all_hint_attempt_is_txt[all_hint_attempt_is_txt.hint_body_word_count2 <= quartiles[0.25]]
 all_hint_attempt_is_txt_q1_q2 = all_hint_attempt_is_txt[
@@ -939,6 +956,61 @@ sns.distplot(hint_attempt_is_txt_q3_q4.log_action_action_pairs_time_taken.values
 plt.legend()
 plt.title("33.1 Breaking down hint_hint with length of the hint by incorporating attempts[depth: 2] as well in \n"
           "actual time > 1.5, z-score[-3,3] vs hint_hint with video vs txt")
+plt.show()
+
+print("=========================================================================================================")
+
+q0_q1_corrrect = hint_attempt_is_txt_0_q1[hint_attempt_is_txt_0_q1.pr_answered_correctly_pair == 1]
+q0_q1_incorrrect = hint_attempt_is_txt_0_q1[hint_attempt_is_txt_0_q1.pr_answered_correctly_pair == 0]
+
+sns.distplot(hint_attempt_is_txt_0_q1.log_action_action_pairs_time_taken.values, hist=False, kde=True, rug=False,
+             label="hint_attempt_is_txt_0_q1: " + str(len(hint_attempt_is_txt_0_q1)))
+sns.distplot(q0_q1_corrrect.log_action_action_pairs_time_taken.values, hist=False, kde=True, rug=False,
+             label="hint_attempt_is_txt_q0_q1_correct: " + str(len(q0_q1_corrrect)))
+sns.distplot(q0_q1_incorrrect.log_action_action_pairs_time_taken.values, hist=False, kde=True, rug=False,
+             label="hint_attempt_is_txt_q0_q1_incorrect: " + str(len(q0_q1_incorrrect)))
+plt.legend()
+plt.title("33.2 hint attempt q0_q1 correct vs incorrect")
+plt.show()
+
+q1_q2_corrrect = hint_attempt_is_txt_q1_q2[hint_attempt_is_txt_q1_q2.pr_answered_correctly_pair == 1]
+q1_q2_incorrrect = hint_attempt_is_txt_q1_q2[hint_attempt_is_txt_q1_q2.pr_answered_correctly_pair == 0]
+
+sns.distplot(hint_attempt_is_txt_q1_q2.log_action_action_pairs_time_taken.values, hist=False, kde=True, rug=False,
+             label="hint_attempt_is_txt_q1_q2: " + str(len(hint_attempt_is_txt_q1_q2)))
+sns.distplot(q0_q1_corrrect.log_action_action_pairs_time_taken.values, hist=False, kde=True, rug=False,
+             label="hint_attempt_is_txt_q1_q2_correct: " + str(len(q1_q2_corrrect)))
+sns.distplot(q0_q1_incorrrect.log_action_action_pairs_time_taken.values, hist=False, kde=True, rug=False,
+             label="hint_attempt_is_txt_q1_q2_incorrect: " + str(len(q1_q2_incorrrect)))
+plt.legend()
+plt.title("33.3 hint attempt q1_q2 correct vs incorrect")
+plt.show()
+
+q2_q3_corrrect = hint_attempt_is_txt_q2_q3[hint_attempt_is_txt_q2_q3.pr_answered_correctly_pair == 1]
+q2_q3_incorrrect = hint_attempt_is_txt_q2_q3[hint_attempt_is_txt_q2_q3.pr_answered_correctly_pair == 0]
+
+sns.distplot(hint_attempt_is_txt_q2_q3.log_action_action_pairs_time_taken.values, hist=False, kde=True, rug=False,
+             label="hint_attempt_is_txt_q2_q3: " + str(len(hint_attempt_is_txt_q2_q3)))
+sns.distplot(q2_q3_corrrect.log_action_action_pairs_time_taken.values, hist=False, kde=True, rug=False,
+             label="hint_attempt_is_txt_q2_q3_correct: " + str(len(q2_q3_corrrect)))
+sns.distplot(q2_q3_incorrrect.log_action_action_pairs_time_taken.values, hist=False, kde=True, rug=False,
+             label="hint_attempt_is_txt_q2_q3_incorrect: " + str(len(q2_q3_incorrrect)))
+plt.legend()
+plt.title("33.4 hint attempt q2_q3 correct vs incorrect")
+plt.show()
+
+
+q3_q4_corrrect = hint_attempt_is_txt_q3_q4[hint_attempt_is_txt_q3_q4.pr_answered_correctly_pair == 1]
+q3_q4_incorrrect = hint_attempt_is_txt_q3_q4[hint_attempt_is_txt_q3_q4.pr_answered_correctly_pair == 0]
+
+sns.distplot(hint_attempt_is_txt_q3_q4.log_action_action_pairs_time_taken.values, hist=False, kde=True, rug=False,
+             label="hint_attempt_is_txt_q3_q4: " + str(len(hint_attempt_is_txt_q3_q4)))
+sns.distplot(q3_q4_corrrect.log_action_action_pairs_time_taken.values, hist=False, kde=True, rug=False,
+             label="hint_attempt_is_txt_q3_q4_correct: " + str(len(q3_q4_corrrect)))
+sns.distplot(q3_q4_incorrrect.log_action_action_pairs_time_taken.values, hist=False, kde=True, rug=False,
+             label="hint_attempt_is_txt_q3_q4_incorrect: " + str(len(q3_q4_incorrrect)))
+plt.legend()
+plt.title("33.5 hint attempt q3_q4 correct vs incorrect")
 plt.show()
 
 print("=========================================================================================================")
