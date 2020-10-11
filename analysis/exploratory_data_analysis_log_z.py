@@ -589,7 +589,6 @@ hint_attempt = hint_attempt.merge(df_hint_info, on="manifest_details", how="left
 hint_attempt.to_csv("../data/hint_attempt_GMM.csv", index=False)
 
 
-
 all_hint_attempt_is_video = all_hint_attempt[all_hint_attempt.is_video == 1]
 all_hint_attempt_is_txt = all_hint_attempt[all_hint_attempt.is_video == 0]
 
