@@ -94,7 +94,7 @@ for ps in pss:
             arrange_action_pairs(user_xid)
 
 
-main_df.to_csv("../data/RTD_preprocessed_new.csv", index=False)
+# main_df.to_csv("../data/RTD_preprocessed_new.csv", index=False)
 # main_df = main_df.loc[main_df.ps == "PS5919713"]
 # user_ids = main_df.user_xid.unique()
 #

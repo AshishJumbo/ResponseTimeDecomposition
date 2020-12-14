@@ -55,7 +55,7 @@ def hint_body_clean_script():
 
 
 hint_body_clean_script()
-df_hint_info.to_csv("../data/hint_infos_clean.csv", index=False)
+# df_hint_info.to_csv("../data/hint_infos_clean.csv", index=False)
 print(df_main.describe())
 
 # # PS level action don't have a PR associated with them
@@ -162,7 +162,7 @@ action_pair_2_scaffold = action_pair_2[
 # plt.title(" 2. Second action pair breakdown if first action pair was incorrect")
 # plt.show()
 
-# StudentResponseAction_HintRequestedAction
+# NOTE: StudentResponseAction_HintRequestedAction
 action_hint_hint = df_main[((df_main.action_action_pairs == "HintRequestedAction_HintRequestedAction") &
                             (df_main.action_action_pairs_order == 3)) |
                            ((df_main.action_action_pairs == "HintRequestedAction_HintRequestedAction") &
@@ -196,14 +196,14 @@ action_hint_hint_3 = action_hint_hint[action_hint_hint.action_action_pairs_order
 # sns.distplot(action_hint_hint_3.z_action_action_pairs_time_taken.values, label="read hint 2 asked for hint 3", kde=True, rug=False)
 # plt.legend()
 # plt.show()
-
+#
 # sns.distplot(action_hint_hint.log_action_action_pairs_time_taken.values, kde=True, rug=False, label="hint_hint_hint")
 # sns.distplot(action_hint_hint_1.log_action_action_pairs_time_taken.values, kde=True, rug=False, label="read problem asked for hint 1")
 # sns.distplot(action_hint_hint_2.log_action_action_pairs_time_taken.values, kde=True, rug=False, label="read hint 1 asked for hint 2")
 # sns.distplot(action_hint_hint_3.log_action_action_pairs_time_taken.values, label="read hint 2 asked for hint 3", kde=True, rug=False)
 # plt.legend()
 # plt.show()
-
+#
 # sns.distplot(action_hint_hint.action_action_pairs_time_taken.values, kde=True, rug=False, label="hint_hint_hint")
 # sns.distplot(action_hint_hint_1.action_action_pairs_time_taken.values, kde=True, rug=False,
 #              label="read problem asked for hint 1")
@@ -232,7 +232,7 @@ action_hint_hint_3 = action_hint_hint[action_hint_hint.action_action_pairs_order
 # plt.legend()
 # plt.title(" 5. First, second and third hint request z-scored [-3,3]")
 # plt.show()
-
+#
 # sns.distplot(action_hint_hint.z_action_action_pairs_time_taken.values, kde=True, rug=False, label="hint_hint_hint")
 # sns.distplot(action_hint_hint_1.z_action_action_pairs_time_taken.values, kde=True, rug=False, label="read problem asked for hint 1")
 # sns.distplot(action_hint_hint_2.z_action_action_pairs_time_taken.values, kde=True, rug=False, label="read hint 1 asked for hint 2")
@@ -246,7 +246,7 @@ action_hint_hint_3 = action_hint_hint[action_hint_hint.action_action_pairs_order
 # sns.distplot(action_hint_hint_3.log_action_action_pairs_time_taken.values, label="read hint 2 asked for hint 3", kde=True, rug=False)
 # plt.legend()
 # plt.show()
-
+#
 # sns.distplot(action_hint_hint.action_action_pairs_time_taken.values, kde=True, rug=False, label="hint_hint_hint")
 # sns.distplot(action_hint_hint_1.action_action_pairs_time_taken.values, kde=True, rug=False,
 #              label="read problem asked for hint 1")
@@ -294,7 +294,7 @@ action_hint_hint_3 = action_hint_hint[action_hint_hint.action_action_pairs_order
 # plt.legend()
 # plt.title(" 7. First, second and third hint request actual time > 1.5 z-score:[-3,3]")
 # plt.show()
-
+#
 # sns.distplot(action_hint_hint.z_action_action_pairs_time_taken.values, kde=True, rug=False, label="hint_hint_hint")
 # sns.distplot(action_hint_hint_1.z_action_action_pairs_time_taken.values, kde=True, rug=False, label="read problem asked for hint 1")
 # sns.distplot(action_hint_hint_2.z_action_action_pairs_time_taken.values, kde=True, rug=False, label="read hint 1 asked for hint 2")
@@ -308,7 +308,7 @@ action_hint_hint_3 = action_hint_hint[action_hint_hint.action_action_pairs_order
 # sns.distplot(action_hint_hint_3.log_action_action_pairs_time_taken.values, label="read hint 2 asked for hint 3", kde=True, rug=False)
 # plt.legend()
 # plt.show()
-
+#
 # sns.distplot(action_hint_hint.action_action_pairs_time_taken.values, kde=True, rug=False, label="hint_hint_hint")
 # sns.distplot(action_hint_hint_1.action_action_pairs_time_taken.values, kde=True, rug=False,
 #              label="read problem asked for hint 1")
@@ -375,7 +375,7 @@ attempt_attempt_hint_hint = all_hint_hint_[(all_hint_hint_.action_action_pairs_o
 # plt.title("10. Breaking down hint_hint first time by incorporating attempts[depth: 2] as well in actual time > 1.5, "
 #           "z-score[-3,3]")
 # plt.show()
-
+#
 # sns.distplot(all_hint_hint_.action_action_pairs_time_taken.values, kde=True, rug=False,
 #              label="hint_hint_beakdown_upto2_attempts")
 # sns.distplot(hint_hint.action_action_pairs_time_taken.values, kde=True, rug=False,
@@ -496,17 +496,12 @@ attempt_attempt_hint_attempt = all_hint_attempt[(all_hint_attempt.action_action_
 hint_attempt_incorrect = hint_attempt[hint_attempt.pr_answered_correctly_pair == 0]
 hint_attempt_correct = hint_attempt[hint_attempt.pr_answered_correctly_pair == 1]
 
-# sns.distplot(hint_attempt.log_action_action_pairs_time_taken.values, hist=False, kde=True, rug=False,
-#              label="hint_attempt: " + str(len(hint_attempt)))
-# sns.distplot(hint_attempt_correct.log_action_action_pairs_time_taken.values, hist=False, kde=True, rug=False,
-#              label="hint_attempt correct: " + str(len(hint_attempt_correct)), color='g')
-# sns.distplot(hint_attempt_incorrect.log_action_action_pairs_time_taken.values, hist=False, kde=True, rug=False,
-#              label="hint_attempt incorrect: " + str(len(hint_attempt_incorrect)), color='r')
-# sns.distplot(hint_hint.log_action_action_pairs_time_taken.values, hist=False, kde=True, rug=False,
-#              label="hint_hint: " + str(len(hint_hint)))
-# plt.legend()
-# plt.title("15. comparing log of the time taken for the first hint_hint vs hint_attempt vs hint_attempt_correct vs hint_"
-#           "attempt_incorrect pairs ")
+sns.distplot(hint_attempt.log_action_action_pairs_time_taken.values, hist=False, kde=True, rug=False,
+             label="(Hint Request, Attempt)", kde_kws={"linestyle":"--"})
+sns.distplot(hint_hint.log_action_action_pairs_time_taken.values, hist=False, kde=True, rug=False,
+             label="(Hint Request, Hint Request)")
+plt.legend()
+plt.title("log transformed action pair response time ")
 # plt.show()
 
 attempt_hint_attempt_incorrect = attempt_hint_attempt[attempt_hint_attempt.pr_answered_correctly_pair == 0]
@@ -516,16 +511,16 @@ attempt_hint_attempt_correct = attempt_hint_attempt[attempt_hint_attempt.pr_answ
 #               label="attempt_hint_attempt: " + str(len(attempt_hint_attempt)))
 # sns.distplot(attempt_hint_attempt_correct.z_action_action_pairs_time_taken.values, hist=False, kde=True, rug=False,
 #               label="attempt_hint_attempt correct: " + str(len(attempt_hint_attempt_correct)), color='g')
-sns.distplot(attempt_hint_attempt_incorrect.z_action_action_pairs_time_taken.values, hist=False, kde=True, rug=False,
-             label="attempt_hint_attempt incorrect: " + str(len(attempt_hint_attempt_incorrect)), color='r')
+# sns.distplot(attempt_hint_attempt_incorrect.z_action_action_pairs_time_taken.values, hist=False, kde=True, rug=False,
+#              label="attempt_hint_attempt incorrect: " + str(len(attempt_hint_attempt_incorrect)), color='r')
 # sns.distplot(hint_hint.z_action_action_pairs_time_taken.values, hist=False, kde=True, rug=False,
 #               label="hint_hint: " + str(len(hint_hint)))
 # sns.distplot(attempt_hint_hint.z_action_action_pairs_time_taken.values, hist=False, kde=True, rug=False,
 #               label="attempt_hint_hint: " + str(len(attempt_hint_hint)), color='c')
-plt.legend()
-plt.title("16. comparing z[-3,3] of the time taken for the hint_hint vs attempt_hint_hint vs attempt_hint_attempt vs "
-          "\n attempt_hint_attempt_correct vs attempt_hint_attempt_incorrect pairs ")
-plt.show()
+# plt.legend()
+# plt.title("16. comparing z[-3,3] of the time taken for the hint_hint vs attempt_hint_hint vs attempt_hint_attempt vs "
+#           "\n attempt_hint_attempt_correct vs attempt_hint_attempt_incorrect pairs ")
+# plt.show()
 
 print("=====================================================================")
 print("---------------------------a_h_a_incorrect---------------------------")
@@ -535,23 +530,27 @@ gmm_aha_ic = GaussianMixture(n_components=clusters, max_iter=100).fit(
 print("Means by sklearn: ", gmm_aha_ic.means_)
 print("=====================================================================")
 
-sns.distplot(attempt_hint_attempt.log_action_action_pairs_time_taken.values, hist=False, kde=True, rug=False,
-             label="attempt_hint_attempt: " + str(len(attempt_hint_attempt)))
-sns.distplot(attempt_hint_attempt_correct.log_action_action_pairs_time_taken.values, hist=False, kde=True, rug=False,
-             label="attempt_hint_attempt correct: " + str(len(attempt_hint_attempt_correct)), color='g')
-sns.distplot(attempt_hint_attempt_incorrect.log_action_action_pairs_time_taken.values, hist=False, kde=True, rug=False,
-             label="attempt_hint_attempt incorrect: " + str(len(attempt_hint_attempt_incorrect)), color='r')
-sns.distplot(hint_hint.log_action_action_pairs_time_taken.values, hist=False, kde=True, rug=False,
-             label="hint_hint: " + str(len(hint_hint)))
-sns.distplot(attempt_hint_hint.log_action_action_pairs_time_taken.values, hist=False, kde=True, rug=False,
-             label="attempt_hint_hint: " + str(len(attempt_hint_hint)), color='c')
-plt.legend()
-plt.title("17. comparing log of the time taken for the hint_hint vs attempt_hint_hint vs attempt_hint_attempt vs "
-          "\n attempt_hint_attempt_correct vs attempt_hint_attempt_incorrect pairs ")
-plt.show()
+# sns.distplot(attempt_hint_attempt.log_action_action_pairs_time_taken.values, hist=False, kde=True, rug=False,
+#              label="attempt_hint_attempt: " + str(len(attempt_hint_attempt)))
+# sns.distplot(attempt_hint_attempt_correct.log_action_action_pairs_time_taken.values, hist=False, kde=True, rug=False,
+#              label="attempt_hint_attempt correct: " + str(len(attempt_hint_attempt_correct)), color='g')
+# sns.distplot(attempt_hint_attempt_incorrect.log_action_action_pairs_time_taken.values, hist=False, kde=True, rug=False,
+#              label="attempt_hint_attempt incorrect: " + str(len(attempt_hint_attempt_incorrect)), color='r')
+# sns.distplot(hint_hint.log_action_action_pairs_time_taken.values, hist=False, kde=True, rug=False,
+#              label="hint_hint: " + str(len(hint_hint)))
+# sns.distplot(attempt_hint_hint.log_action_action_pairs_time_taken.values, hist=False, kde=True, rug=False,
+#              label="attempt_hint_hint: " + str(len(attempt_hint_hint)), color='c')
+# plt.legend()
+# plt.title("17. comparing log of the time taken for the hint_hint vs attempt_hint_hint vs attempt_hint_attempt vs "
+#           "\n attempt_hint_attempt_correct vs attempt_hint_attempt_incorrect pairs ")
+# plt.show()
 
 all_hint_attempt_incorrect = all_hint_attempt[all_hint_attempt.pr_answered_correctly_pair == 0]
 all_hint_attempt_correct = all_hint_attempt[all_hint_attempt.pr_answered_correctly_pair == 1]
+
+# sns.set(font_scale=1.2)
+sns.set(context="talk", style="whitegrid", font_scale=2)
+
 
 sns.distplot(all_hint_attempt.log_action_action_pairs_time_taken.values, hist=False, kde=True, rug=False,
              label="all_hint_attempt: " + str(len(all_hint_attempt)))
@@ -571,45 +570,45 @@ print("==========================================merging with hint_info=========
 all_hint_hint_["manifest_details"] = all_hint_hint_["manifest_details"].astype(int)
 all_hint_hint_ = all_hint_hint_.merge(df_hint_info, on="manifest_details", how="left")
 
-all_hint_hint_.to_csv("../data/all_hint_hint_GMM.csv", index=False)
+# all_hint_hint_.to_csv("../data/all_hint_hint_GMM.csv", index=False)
 
 all_hint_attempt["manifest_details"] = all_hint_attempt["manifest_details"].astype(int)
 all_hint_attempt = all_hint_attempt.merge(df_hint_info, on="manifest_details", how="left")
-all_hint_attempt.to_csv("../data/all_hint_attempt_GMM.csv", index=False)
+# all_hint_attempt.to_csv("../data/all_hint_attempt_GMM.csv", index=False)
 
 
 
 hint_hint["manifest_details"] = hint_hint["manifest_details"].astype(int)
 hint_hint = hint_hint.merge(df_hint_info, on="manifest_details", how="left")
 
-hint_hint.to_csv("../data/hint_hint_GMM.csv", index=False)
+# hint_hint.to_csv("../data/hint_hint_GMM.csv", index=False)
 
 hint_attempt["manifest_details"] = hint_attempt["manifest_details"].astype(int)
 hint_attempt = hint_attempt.merge(df_hint_info, on="manifest_details", how="left")
-hint_attempt.to_csv("../data/hint_attempt_GMM.csv", index=False)
+# hint_attempt.to_csv("../data/hint_attempt_GMM.csv", index=False)
 
 
 all_hint_attempt_is_video = all_hint_attempt[all_hint_attempt.is_video == 1]
 all_hint_attempt_is_txt = all_hint_attempt[all_hint_attempt.is_video == 0]
 
-sns.distplot(all_hint_attempt.log_action_action_pairs_time_taken.values, hist=False, kde=True, rug=False,
-             label="all_hint_attempt: " + str(len(all_hint_attempt)))
-sns.distplot(all_hint_attempt_incorrect.log_action_action_pairs_time_taken.values, hist=False, kde=True, rug=False,
-             label="all_hint_attempt incorrect: " + str(len(all_hint_attempt_incorrect)), color='r')
-sns.distplot(all_hint_attempt_correct.log_action_action_pairs_time_taken.values, hist=False, kde=True, rug=False,
-             label="all_hint_attempt_correct: " + str(len(all_hint_attempt_correct)), color='g')
-sns.distplot(all_hint_attempt_is_video.log_action_action_pairs_time_taken.values, hist=False, kde=True, rug=False,
-             label="all_hint_attempt_is_video: " + str(len(all_hint_attempt_is_video)))
-sns.distplot(all_hint_attempt_is_txt.log_action_action_pairs_time_taken.values, hist=False, kde=True, rug=False,
-             label="all_hint_attempt_is_txt: " + str(len(all_hint_attempt_is_txt)))
-sns.distplot(hint_hint.log_action_action_pairs_time_taken.values, hist=False, kde=True, rug=False,
-             label="hint_hint: " + str(len(hint_hint)))
-sns.distplot(all_hint_hint_.log_action_action_pairs_time_taken.values, hist=False, kde=True, rug=False,
-             label="all_hint_hint: " + str(len(all_hint_hint_)))
-plt.legend()
-plt.title("19. all_hint_hint vs all_hint_attempt vs all_hint_attempt_correct vs all_hint_attempt_incorrect vs "
-          "all_hint_attempt_video vs all_hint_attempt_txt")
-plt.show()
+# sns.distplot(all_hint_attempt.log_action_action_pairs_time_taken.values, hist=False, kde=True, rug=False,
+#              label="all_hint_attempt: " + str(len(all_hint_attempt)))
+# sns.distplot(all_hint_attempt_incorrect.log_action_action_pairs_time_taken.values, hist=False, kde=True, rug=False,
+#              label="all_hint_attempt incorrect: " + str(len(all_hint_attempt_incorrect)), color='r')
+# sns.distplot(all_hint_attempt_correct.log_action_action_pairs_time_taken.values, hist=False, kde=True, rug=False,
+#              label="all_hint_attempt_correct: " + str(len(all_hint_attempt_correct)), color='g')
+# sns.distplot(all_hint_attempt_is_video.log_action_action_pairs_time_taken.values, hist=False, kde=True, rug=False,
+#              label="all_hint_attempt_is_video: " + str(len(all_hint_attempt_is_video)))
+# sns.distplot(all_hint_attempt_is_txt.log_action_action_pairs_time_taken.values, hist=False, kde=True, rug=False,
+#              label="all_hint_attempt_is_txt: " + str(len(all_hint_attempt_is_txt)))
+# sns.distplot(hint_hint.log_action_action_pairs_time_taken.values, hist=False, kde=True, rug=False,
+#              label="hint_hint: " + str(len(hint_hint)))
+# sns.distplot(all_hint_hint_.log_action_action_pairs_time_taken.values, hist=False, kde=True, rug=False,
+#              label="all_hint_hint: " + str(len(all_hint_hint_)))
+# plt.legend()
+# plt.title("19. all_hint_hint vs all_hint_attempt vs all_hint_attempt_correct vs all_hint_attempt_incorrect vs "
+#           "all_hint_attempt_video vs all_hint_attempt_txt")
+# plt.show()
 
 all_hint_attempt_is_video_correct = all_hint_attempt_is_video[all_hint_attempt_is_video.pr_answered_correctly_pair == 1]
 all_hint_attempt_is_video_incorrect = all_hint_attempt_is_video[
@@ -625,66 +624,66 @@ hint_attempt_is_txt_incorrect = hint_attempt_is_txt[hint_attempt_is_txt.pr_answe
 hint_attempt_is_video_correct = hint_attempt_is_video[hint_attempt_is_video.pr_answered_correctly_pair == 1]
 hint_attempt_is_video_incorrect = hint_attempt_is_video[hint_attempt_is_video.pr_answered_correctly_pair == 0]
 
-sns.distplot(all_hint_attempt.log_action_action_pairs_time_taken.values, hist=False, kde=True, rug=False,
-             label="all_hint_attempt: " + str(len(all_hint_attempt)), color='k')
-sns.distplot(all_hint_attempt_is_txt_correct.log_action_action_pairs_time_taken.values, hist=False, kde=True, rug=False,
-             label="all_hint_attempt_is_txt_correct: " + str(len(all_hint_attempt_is_txt_correct)), color='g')
-sns.distplot(all_hint_attempt_is_txt_incorrect.log_action_action_pairs_time_taken.values, hist=False, kde=True,
-             rug=False,
-             label="all_hint_attempt_is_txt_incorrect: " + str(len(all_hint_attempt_is_txt_incorrect)), color='r')
-sns.distplot(all_hint_attempt_is_txt.log_action_action_pairs_time_taken.values, hist=False, kde=True, rug=False,
-             label="all_hint_attempt_is_txt: " + str(len(all_hint_attempt_is_txt)), color='b')
-sns.distplot(hint_hint.log_action_action_pairs_time_taken.values, hist=False, kde=True, rug=False,
-             label="hint_hint: " + str(len(hint_hint)))
-sns.distplot(all_hint_hint_.log_action_action_pairs_time_taken.values, hist=False, kde=True, rug=False,
-             label="all_hint_hint: " + str(len(all_hint_hint_)))
-plt.legend()
-plt.title("20. all_hint_hint vs all_hint_attempt_txt vs all_hint_attempt_txt_correct vs all_hint_attempt_txt_incorrect")
-plt.show()
-
-sns.distplot(all_hint_attempt_is_txt_correct.log_action_action_pairs_time_taken.values, hist=False, kde=True, rug=False,
-             label="all_hint_attempt_is_txt_correct: " + str(len(all_hint_attempt_is_txt_correct)), color='g')
-sns.distplot(all_hint_attempt_is_txt_incorrect.log_action_action_pairs_time_taken.values, hist=False, kde=True,
-             rug=False,
-             label="all_hint_attempt_is_txt_incorrect: " + str(len(all_hint_attempt_is_txt_incorrect)), color='r')
-sns.distplot(all_hint_attempt_is_txt.log_action_action_pairs_time_taken.values, hist=False, kde=True, rug=False,
-             label="all_hint_attempt_is_txt: " + str(len(all_hint_attempt_is_txt)), color='b')
-plt.legend()
-plt.title(
-    "20.1 all_hint_hint vs all_hint_attempt_txt vs all_hint_attempt_txt_correct vs all_hint_attempt_txt_incorrect")
-plt.show()
-
-sns.distplot(all_hint_attempt.log_action_action_pairs_time_taken.values, hist=False, kde=True, rug=False,
-             label="all_hint_attempt: " + str(len(all_hint_attempt)))
-sns.distplot(all_hint_attempt_is_video_correct.log_action_action_pairs_time_taken.values, hist=False, kde=True,
-             rug=False,
-             label="all_hint_attempt_is_video_correct: " + str(len(all_hint_attempt_is_video_correct)), color='g')
-sns.distplot(all_hint_attempt_is_video_incorrect.log_action_action_pairs_time_taken.values, hist=False, kde=True,
-             rug=False,
-             label="all_hint_attempt_is_video_incorrect: " + str(len(all_hint_attempt_is_video_incorrect)), color='r')
-sns.distplot(all_hint_attempt_is_video.log_action_action_pairs_time_taken.values, hist=False, kde=True, rug=False,
-             label="all_hint_attempt_is_video: " + str(len(all_hint_attempt_is_video)))
-sns.distplot(hint_hint.log_action_action_pairs_time_taken.values, hist=False, kde=True, rug=False,
-             label="hint_hint: " + str(len(hint_hint)))
-sns.distplot(all_hint_hint_.log_action_action_pairs_time_taken.values, hist=False, kde=True, rug=False,
-             label="all_hint_hint: " + str(len(all_hint_hint_)))
-plt.legend()
-plt.title("21. all_hint_hint vs all_hint_attempt_video vs all_hint_attempt_is_video_correct vs "
-          "all_hint_attempt_is_video_incorrect")
-plt.show()
-
-sns.distplot(all_hint_attempt_is_video_correct.log_action_action_pairs_time_taken.values, hist=False, kde=True,
-             rug=False,
-             label="all_hint_attempt_is_video_correct: " + str(len(all_hint_attempt_is_video_correct)), color='g')
-sns.distplot(all_hint_attempt_is_video_incorrect.log_action_action_pairs_time_taken.values, hist=False, kde=True,
-             rug=False,
-             label="all_hint_attempt_is_video_incorrect: " + str(len(all_hint_attempt_is_video_incorrect)), color='r')
-sns.distplot(all_hint_attempt_is_video.log_action_action_pairs_time_taken.values, hist=False, kde=True, rug=False,
-             label="all_hint_attempt_is_video: " + str(len(all_hint_attempt_is_video)))
-plt.legend()
-plt.title("21.1 all_hint_hint vs all_hint_attempt_video vs all_hint_attempt_is_video_correct vs "
-          "all_hint_attempt_is_video_incorrect")
-plt.show()
+# sns.distplot(all_hint_attempt.log_action_action_pairs_time_taken.values, hist=False, kde=True, rug=False,
+#              label="all_hint_attempt: " + str(len(all_hint_attempt)), color='k')
+# sns.distplot(all_hint_attempt_is_txt_correct.log_action_action_pairs_time_taken.values, hist=False, kde=True, rug=False,
+#              label="all_hint_attempt_is_txt_correct: " + str(len(all_hint_attempt_is_txt_correct)), color='g')
+# sns.distplot(all_hint_attempt_is_txt_incorrect.log_action_action_pairs_time_taken.values, hist=False, kde=True,
+#              rug=False,
+#              label="all_hint_attempt_is_txt_incorrect: " + str(len(all_hint_attempt_is_txt_incorrect)), color='r')
+# sns.distplot(all_hint_attempt_is_txt.log_action_action_pairs_time_taken.values, hist=False, kde=True, rug=False,
+#              label="all_hint_attempt_is_txt: " + str(len(all_hint_attempt_is_txt)), color='b')
+# sns.distplot(hint_hint.log_action_action_pairs_time_taken.values, hist=False, kde=True, rug=False,
+#              label="hint_hint: " + str(len(hint_hint)))
+# sns.distplot(all_hint_hint_.log_action_action_pairs_time_taken.values, hist=False, kde=True, rug=False,
+#              label="all_hint_hint: " + str(len(all_hint_hint_)))
+# plt.legend()
+# plt.title("20. all_hint_hint vs all_hint_attempt_txt vs all_hint_attempt_txt_correct vs all_hint_attempt_txt_incorrect")
+# plt.show()
+#
+# sns.distplot(all_hint_attempt_is_txt_correct.log_action_action_pairs_time_taken.values, hist=False, kde=True, rug=False,
+#              label="all_hint_attempt_is_txt_correct: " + str(len(all_hint_attempt_is_txt_correct)), color='g')
+# sns.distplot(all_hint_attempt_is_txt_incorrect.log_action_action_pairs_time_taken.values, hist=False, kde=True,
+#              rug=False,
+#              label="all_hint_attempt_is_txt_incorrect: " + str(len(all_hint_attempt_is_txt_incorrect)), color='r')
+# sns.distplot(all_hint_attempt_is_txt.log_action_action_pairs_time_taken.values, hist=False, kde=True, rug=False,
+#              label="all_hint_attempt_is_txt: " + str(len(all_hint_attempt_is_txt)), color='b')
+# plt.legend()
+# plt.title(
+#     "20.1 all_hint_hint vs all_hint_attempt_txt vs all_hint_attempt_txt_correct vs all_hint_attempt_txt_incorrect")
+# plt.show()
+#
+# sns.distplot(all_hint_attempt.log_action_action_pairs_time_taken.values, hist=False, kde=True, rug=False,
+#              label="all_hint_attempt: " + str(len(all_hint_attempt)))
+# sns.distplot(all_hint_attempt_is_video_correct.log_action_action_pairs_time_taken.values, hist=False, kde=True,
+#              rug=False,
+#              label="all_hint_attempt_is_video_correct: " + str(len(all_hint_attempt_is_video_correct)), color='g')
+# sns.distplot(all_hint_attempt_is_video_incorrect.log_action_action_pairs_time_taken.values, hist=False, kde=True,
+#              rug=False,
+#              label="all_hint_attempt_is_video_incorrect: " + str(len(all_hint_attempt_is_video_incorrect)), color='r')
+# sns.distplot(all_hint_attempt_is_video.log_action_action_pairs_time_taken.values, hist=False, kde=True, rug=False,
+#              label="all_hint_attempt_is_video: " + str(len(all_hint_attempt_is_video)))
+# sns.distplot(hint_hint.log_action_action_pairs_time_taken.values, hist=False, kde=True, rug=False,
+#              label="hint_hint: " + str(len(hint_hint)))
+# sns.distplot(all_hint_hint_.log_action_action_pairs_time_taken.values, hist=False, kde=True, rug=False,
+#              label="all_hint_hint: " + str(len(all_hint_hint_)))
+# plt.legend()
+# plt.title("21. all_hint_hint vs all_hint_attempt_video vs all_hint_attempt_is_video_correct vs "
+#           "all_hint_attempt_is_video_incorrect")
+# plt.show()
+#
+# sns.distplot(all_hint_attempt_is_video_correct.log_action_action_pairs_time_taken.values, hist=False, kde=True,
+#              rug=False,
+#              label="all_hint_attempt_is_video_correct: " + str(len(all_hint_attempt_is_video_correct)), color='g')
+# sns.distplot(all_hint_attempt_is_video_incorrect.log_action_action_pairs_time_taken.values, hist=False, kde=True,
+#              rug=False,
+#              label="all_hint_attempt_is_video_incorrect: " + str(len(all_hint_attempt_is_video_incorrect)), color='r')
+# sns.distplot(all_hint_attempt_is_video.log_action_action_pairs_time_taken.values, hist=False, kde=True, rug=False,
+#              label="all_hint_attempt_is_video: " + str(len(all_hint_attempt_is_video)))
+# plt.legend()
+# plt.title("21.1 all_hint_hint vs all_hint_attempt_video vs all_hint_attempt_is_video_correct vs "
+#           "all_hint_attempt_is_video_incorrect")
+# plt.show()
 
 all_hint_hint_is_video = all_hint_hint_[all_hint_hint_.is_video == 1]
 all_hint_hint_is_txt = all_hint_hint_[all_hint_hint_.is_video == 0]
@@ -1147,13 +1146,13 @@ all_hint_attempt_is_txt_incorrect_q2_q3 = all_hint_attempt_is_txt_incorrect[
 all_hint_attempt_is_txt_incorrect_q3_q4 = all_hint_attempt_is_txt_incorrect[(all_hint_attempt_is_txt_incorrect.hint_body_word_count2 > quartiles2[0.75])]
 
 sns.distplot(all_hint_attempt_is_txt_incorrect.log_action_action_pairs_time_taken.values, hist=False, kde=True, rug=False,
-             label="all_hint_attempt_is_txt_incorrect: " + str(len(all_hint_attempt_is_txt_incorrect)))
+             label="all_hint_attempt_is_txt_incorrect: " + str(len(all_hint_attempt_is_txt_incorrect)), kde_kws={"linestyle":"--"})
 sns.distplot(all_hint_attempt_is_txt_incorrect_0_q1.log_action_action_pairs_time_taken.values, hist=False, kde=True, rug=False,
-             label="all_hint_attempt_is_txt_incorrect_0_q1: " + str(len(all_hint_attempt_is_txt_incorrect_0_q1)))
+             label="all_hint_attempt_is_txt_incorrect_0_q1: " + str(len(all_hint_attempt_is_txt_incorrect_0_q1)), kde_kws={"linestyle":"-."})
 sns.distplot(all_hint_attempt_is_txt_incorrect_q1_q2.log_action_action_pairs_time_taken.values, hist=False, kde=True, rug=False,
-             label="all_hint_attempt_is_txt_incorrect_q1_q2: " + str(len(all_hint_attempt_is_txt_incorrect_q1_q2)))
+             label="all_hint_attempt_is_txt_incorrect_q1_q2: " + str(len(all_hint_attempt_is_txt_incorrect_q1_q2)), kde_kws={"linestyle":":"})
 sns.distplot(all_hint_attempt_is_txt_incorrect_q2_q3.log_action_action_pairs_time_taken.values, hist=False, kde=True, rug=False,
-             label="all_hint_attempt_is_txt_incorrect_q2_q3: " + str(len(all_hint_attempt_is_txt_incorrect_q2_q3)))
+             label="all_hint_attempt_is_txt_incorrect_q2_q3: " + str(len(all_hint_attempt_is_txt_incorrect_q2_q3)), kde_kws={"linestyle":"-"})
 sns.distplot(all_hint_attempt_is_txt_incorrect_q3_q4.log_action_action_pairs_time_taken.values, hist=False, kde=True, rug=False,
              label="all_hint_attempt_is_txt_incorrect_q3_q4: " + str(len(all_hint_attempt_is_txt_incorrect_q3_q4)))
 plt.legend()
@@ -1172,3 +1171,100 @@ print(all_hint_attempt_is_txt_incorrect_q1_q2.hint_body_has_wiris.value_counts()
 print(all_hint_attempt_is_txt_incorrect_q2_q3.hint_body_has_wiris.value_counts())
 print(all_hint_attempt_is_txt_incorrect_q3_q4.hint_body_has_wiris.value_counts())
 print("=========================================================================================================")
+
+sns.distplot(all_hint_hint_.log_action_action_pairs_time_taken.values, hist=False, kde=True, rug=False,
+             label="( Hint Request, Hint Request)")
+sns.distplot(all_hint_attempt.log_action_action_pairs_time_taken.values, hist=False, kde=True, rug=False,
+             label="( Hint Request, Attempt)", kde_kws={"linestyle":"--"})
+plt.xlabel("log transformed action pair response time")
+plt.show()
+
+sns.distplot(hint_hint.log_action_action_pairs_time_taken.values, hist=False, kde=True, rug=False,
+             label="( Hint Request, Hint Request)")
+sns.distplot(hint_attempt.log_action_action_pairs_time_taken.values, hist=False, kde=True, rug=False,
+             label="( Hint Request, Attempt)", kde_kws={"linestyle":"--"})
+plt.xlabel("log transformed action pair response time")
+plt.show()
+
+sns.set(context="talk", style="whitegrid", font_scale=1.7, rc={'figure.figsize': (32, 12)})
+
+fig, (ax1, ax2) =  plt.subplots(ncols=2, sharey=True)
+
+sns.distplot(all_hint_hint_is_txt.log_action_action_pairs_time_taken.values, hist=False, kde=True, rug=False,
+             label="hint is txt", ax=ax1)
+sns.distplot(all_hint_hint_is_video.log_action_action_pairs_time_taken.values, hist=False, kde=True, rug=False,
+             label="hint is video", kde_kws={"linestyle":"--"}, ax=ax1)
+
+sns.distplot(hint_hint_is_txt.log_action_action_pairs_time_taken.values, hist=False, kde=True, rug=False,
+             label="hint is txt", ax=ax2)
+sns.distplot(hint_hint_is_video.log_action_action_pairs_time_taken.values, hist=False, kde=True, rug=False,
+             label="hint is video", kde_kws={"linestyle":"--"}, ax=ax2)
+ax1.set_title("1. (Hint Request, Hint Request) pair for all Hint Request")
+ax1.set_xlabel("log transformed action pair response time")
+
+ax2.set_title("2. (Hint Request, Hint Request) pair for first Hint Request")
+ax2.set_xlabel("log transformed action pair response time")
+plt.legend()
+# plt.xlabel("log transformed action pair response time")
+plt.show()
+
+fig, (ax1, ax2) =  plt.subplots(ncols=2, sharey=True)
+
+sns.distplot(all_hint_attempt_is_txt.log_action_action_pairs_time_taken.values, hist=False, kde=True, rug=False,
+             label="hint is txt", ax=ax1)
+sns.distplot(all_hint_attempt_is_video.log_action_action_pairs_time_taken.values, hist=False, kde=True, rug=False,
+             label="hint is video", kde_kws={"linestyle":"--"}, ax=ax1)
+
+sns.distplot(hint_attempt_is_txt.log_action_action_pairs_time_taken.values, hist=False, kde=True, rug=False,
+             label="hint is txt", ax=ax2)
+sns.distplot(hint_attempt_is_video.log_action_action_pairs_time_taken.values, hist=False, kde=True, rug=False,
+             label="hint is video", kde_kws={"linestyle":"--"}, ax=ax2)
+ax1.set_title("1. (Hint Request, Attempt) pair for all Hint Request")
+ax1.set_xlabel("log transformed action pair response time")
+
+ax2.set_title("2. (Hint Request, Attempt) pair for first Hint Request")
+ax2.set_xlabel("log transformed action pair response time")
+plt.legend()
+# plt.xlabel("log transformed action pair response time")
+plt.show()
+
+fig, (ax1, ax2) =  plt.subplots(ncols=2, sharey=True)
+
+sns.distplot(all_hint_attempt_correct.log_action_action_pairs_time_taken.values, hist=False, kde=True, rug=False,
+             label="correct attempt", ax=ax1)
+sns.distplot(all_hint_attempt_incorrect.log_action_action_pairs_time_taken.values, hist=False, kde=True, rug=False,
+             label="incorrect attempt", kde_kws={"linestyle":"--"}, ax=ax1)
+
+sns.distplot(hint_attempt_correct.log_action_action_pairs_time_taken.values, hist=False, kde=True, rug=False,
+             label="correct attempt", ax=ax2)
+sns.distplot(hint_attempt_incorrect.log_action_action_pairs_time_taken.values, hist=False, kde=True, rug=False,
+             label="incorrect attempt", kde_kws={"linestyle":"--"}, ax=ax2)
+ax1.set_title("1. (Hint Request, Attempt) pair for all Hint Request")
+ax1.set_xlabel("log transformed action pair response time")
+
+ax2.set_title("2. (Hint Request, Attempt) pair for first Hint Request")
+ax2.set_xlabel("log transformed action pair response time")
+plt.legend()
+# plt.xlabel("log transformed action pair response time")
+plt.show()
+
+fig, (ax1, ax2) =  plt.subplots(ncols=2, sharey=True)
+
+sns.distplot(all_hint_hint_.log_action_action_pairs_time_taken.values, hist=False, kde=True, rug=False,
+             label="(Hint Request, Hint Request)", ax=ax1)
+sns.distplot(all_hint_attempt.log_action_action_pairs_time_taken.values, hist=False, kde=True, rug=False,
+             label="(Hint Request, Attempt)", kde_kws={"linestyle":"--"}, ax=ax1)
+
+sns.distplot(hint_hint.log_action_action_pairs_time_taken.values, hist=False, kde=True, rug=False,
+             label="(Hint Request, Hint Request)", ax=ax2)
+sns.distplot(hint_attempt.log_action_action_pairs_time_taken.values, hist=False, kde=True, rug=False,
+             label="(Hint Request, Attempt)", kde_kws={"linestyle":"--"}, ax=ax2)
+ax1.set_title("1. action pair for all Hint Request")
+ax1.set_xlabel("log transformed action pair response time")
+
+ax2.set_title("2. action pair for first Hint Request")
+ax2.set_xlabel("log transformed action pair response time")
+plt.legend()
+# plt.xlabel("log transformed action pair response time")
+plt.show()
+
