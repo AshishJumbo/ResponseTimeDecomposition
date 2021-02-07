@@ -2,9 +2,9 @@
 Exploring the response time decomposition of student action logs in ASSISTments.<br>
 Collaborators:<br> 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-AB<br>
+Dr. Anthony F. Botelho<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-AG
+Ashish Gurung
 
 [link to the data](https://drive.google.com/drive/folders/1fRhyVEetIsgRdp-B8J5seH64FCHC2HMI?usp=sharing)
 <br>[NOTE: there are two files one preprocessed one regular. The preprocessed data is called RDT_...csv]
