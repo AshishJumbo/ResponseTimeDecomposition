@@ -18,7 +18,7 @@ If you wish to replicate the code without going through preprocessing then downl
 4. regression_analysis.py
     We conduct a regression analysis to explore the correlation between two learning outcomes and inferred effort from the Gaussian Mixture Model.
 
-***[NOTE: the 4 python files in the analysis folder will export more information than available in the paper. This was done to provide fellow researchers with an opportunity to explore other aspects in the data and possibly go into tangents of the exploratory analysis.]***
+***[NOTE: the 4 python files in the analysis folder will export more information than available in the paper. This was done to provide fellow researchers with an opportunity to explore other aspects in the data and possibly go into tangents that further expand on our findings from the exploratory analysis.]***
 
 
 <h4>The following is the order of execution of the files in the project for preprocessing:</h4>
