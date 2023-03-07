@@ -8,7 +8,20 @@ Ashish Gurung
 
 [link to the data](https://drive.google.com/drive/folders/1fRhyVEetIsgRdp-B8J5seH64FCHC2HMI?usp=sharing)
 <br>[NOTE: there are two files one preprocessed one regular. The preprocessed data is called RDT_...csv]
-<h4>The following is the order of execution of the files in the project:</h4>
+If you wish to replicate the code without going through preprocessing then download all the csv files from the google drive into the data folder in your project. Once downloaded run the 4 python files in the analysis section in the following order:
+1. exploratory_data_analysis.py
+    This will breakdown the different types of action pairs in the data.
+2. exploratory_data_analysis_log_z.py
+    This will export the figures of the various action pairs interms of log transformed response time. 
+3. gmm_breakdown.py
+    We now train a Gaussian Mixture Model to estimate where a users' response time falls interms of the bimodal distrubution. 
+4. regression_analysis.py
+    We conduct a regression analysis to explore the correlation between two learning outcomes and inferred effort from the Gaussian Mixture Model.
+
+[NOTE: the code will export more information than available in the paper. This was done to provide fellow researchers with an opportunity to explore other aspects in the data and possibly go into tangents of the exploratory analysis.]
+
+
+<h4>The following is the order of execution of the files in the project for preprocessing:</h4>
 <ol>
     <li>libreoffice_prep.py <br/>
         This is the first code base that sorts the data and ensures that everything is in 
