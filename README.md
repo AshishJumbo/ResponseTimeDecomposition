@@ -8,6 +8,10 @@ Ashish Gurung
 
 [link to the data](https://drive.google.com/drive/folders/1fRhyVEetIsgRdp-B8J5seH64FCHC2HMI?usp=sharing)
 <br>[NOTE: there are two files one preprocessed one regular. The preprocessed data is called RDT_...csv]
+
+<br>
+--------
+<h4> Analysis Replication Guide <h4>
 If you wish to replicate the code without going through preprocessing then download all the csv files from the google drive into the data folder in your project. Once downloaded run the 4 python files in the analysis section in the following order:
 1. exploratory_data_analysis.py
     This will breakdown the different types of action pairs in the data.
@@ -20,6 +24,7 @@ If you wish to replicate the code without going through preprocessing then downl
 
 ***[NOTE: the 4 python files in the analysis folder will export more information than available in the paper. This was done to provide fellow researchers with an opportunity to explore other aspects in the data and possibly go into tangents that further expand on our findings from the exploratory analysis.]***
 
+---------
 
 <h4>The following is the order of execution of the files in the project for preprocessing:</h4>
 <ol>
