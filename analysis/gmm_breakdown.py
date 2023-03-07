@@ -12,7 +12,7 @@ all_hint_action = pd.read_csv("../data/all_hint_action_GMM.csv")
 all_hint_hint = pd.read_csv("../data/all_hint_hint_GMM.csv")
 
 sns.set(context="poster", style="whitegrid")
-sns.set(rc={'figure.figsize': (16, 12)})
+sns.set(rc={'figure.figsize': (10, 8)})
 sns.distplot(hint_action.log_action_action_pairs_time_taken.values, hist=True, kde=True, rug=False,
              label="hint_action: " + str(len(hint_action)))
 plt.legend()
@@ -53,7 +53,7 @@ test = hint_action[["action_action_pairs", "action_action_pairs_time_taken", "lo
 # hint_action.to_csv("../data/hint_action_GMM_npc.csv", index=False)
 
 sns.set(context="poster", style="whitegrid")
-sns.set(rc={'figure.figsize': (16, 12)})
+sns.set(rc={'figure.figsize': (10, 8)})
 sns.distplot(hint_action.log_action_action_pairs_time_taken.values, hist=True, kde=True, rug=False,
              label="hint_action: " + str(len(hint_action)))
 sns.distplot(all_hint_action.log_action_action_pairs_time_taken.values, hist=True, kde=True, rug=False,

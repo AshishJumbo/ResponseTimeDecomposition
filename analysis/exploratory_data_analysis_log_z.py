@@ -72,7 +72,7 @@ df_main.action_action_pairs_time_taken.replace({0: 0.000000001}, inplace=True)
 # df_main['z_action_action_pairs_time_taken'] = stats.zscore(df_main['log_action_action_pairs_time_taken'])
 
 sns.set(style="whitegrid")
-sns.set(rc={'figure.figsize': (16, 12)})
+sns.set(rc={'figure.figsize': (10, 8)})
 
 # sns.distplot(df_main.z_action_action_pairs_time_taken.values, kde=True, rug=False)
 # plt.title("histogram: z-score plt")
@@ -1186,7 +1186,7 @@ sns.distplot(hint_attempt.log_action_action_pairs_time_taken.values, hist=False,
 plt.xlabel("log transformed action pair response time")
 plt.show()
 
-sns.set(context="talk", style="whitegrid", font_scale=1.7, rc={'figure.figsize': (32, 12)})
+sns.set(context="talk", style="whitegrid", font_scale=1.7, rc={'figure.figsize': (10, 8)})
 
 fig, (ax1, ax2) =  plt.subplots(ncols=2, sharey=True)
 

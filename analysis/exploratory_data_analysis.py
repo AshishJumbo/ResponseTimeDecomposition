@@ -3,7 +3,7 @@ import seaborn as sns
 import matplotlib.pyplot as plt
 import numpy as np
 
-df_main = pd.read_csv('../data/RTD_data_randomsample_20K.csv')
+df_main = pd.read_csv('../data/RTD_data_randomsample_20K_new.csv')
 
 print(df_main.describe())
 
@@ -79,7 +79,7 @@ def plotCharts(df, fig_width, fig_height, title):
     for tick in range(len(nobs)):
         # idx = nobs2.index(labels[tick].get_text())
 
-        print(labels[tick].get_text(), medians[tick], len(nobs) - tick - 1, nobs[tick])
+        print(labels[tick], medians[tick], len(nobs) - tick - 1, nobs[tick])
         ax.text(medians[tick], len(nobs) - tick - 1, nobs[tick],
                 horizontalalignment='center', size='x-small', color='b', weight='semibold', bbox=dict(boxstyle="round",
                                                                                                       ec=(1., 0.5, 0.5),

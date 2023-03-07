@@ -24,7 +24,7 @@ all_hint_action_GMM_npc["prior_completion"].fillna((all_hint_action_GMM_npc["pri
                                                    inplace=True)
 
 sns.set(context="poster", style="whitegrid")
-sns.set(rc={'figure.figsize': (16, 12)})
+sns.set(rc={'figure.figsize': (10, 8)})
 
 
 def generateCorr(df):
