@@ -13,7 +13,7 @@ Ashish Gurung
 
 -----------------------
 <h4> Analysis Replication Guide </h4>
-If you wish to replicate the code without going through preprocessing then download all the csv files from the google drive into the data folder in your project. Once downloaded run the 4 python files in the analysis section in the following order:
+If you wish to replicate the code without going through preprocessing then download all the csv files from the google drive into the data folder in your project. Once downloaded run the 3 python files in the analysis section in the following order:
 
 1. exploratory_data_analysis_log_z.py
     This will export the figures of the various action pairs interms of log transformed response time. 
@@ -22,7 +22,7 @@ If you wish to replicate the code without going through preprocessing then downl
 3. regression_analysis.py
     We conduct a regression analysis to explore the correlation between two learning outcomes and inferred effort from the Gaussian Mixture Model.
 
-***[NOTE: the 4 python files in the analysis folder will export more information than available in the paper. This was done to provide fellow researchers with an opportunity to explore other aspects in the data and possibly go into tangents that further expand on our findings from the exploratory analysis.]***
+***[NOTE: the 3 python files in the analysis folder will export more information than available in the paper. This was done to provide fellow researchers with an opportunity to explore other aspects in the data and possibly go into tangents that further expand on our findings from the exploratory analysis.]***
 
 ---------
 
