@@ -97,13 +97,24 @@ hint_hint = all_hint_hint[(all_hint_hint.action_action_pairs_order == 2) &
 
 # sns.set(style="grid", font_scale=2)
 sns.set(context='talk', style="whitegrid", font_scale=1.5, rc={'figure.figsize': (18, 15)})
+sns.distplot(all_hint_hint.log_action_action_pairs_time_taken.values, hist=False, kde=True, rug=False,
+             label="all (Hint Request, Hint Request)")
+sns.distplot(all_hint_attempt.log_action_action_pairs_time_taken.values, hist=False, kde=True, rug=False,
+             label="all (Hint Request, Attempt)", kde_kws={"linestyle": "--"})
+plt.legend()
+plt.xlabel("log transformed action pair response time ")
+plt.savefig("../images/plots/plot1.png")
+# plt.show()
+
+sns.set(context='talk', style="whitegrid", font_scale=1.5, rc={'figure.figsize': (18, 15)})
 sns.distplot(hint_hint.log_action_action_pairs_time_taken.values, hist=False, kde=True, rug=False,
              label="(Hint Request, Hint Request)")
 sns.distplot(hint_attempt.log_action_action_pairs_time_taken.values, hist=False, kde=True, rug=False,
              label="(Hint Request, Attempt)", kde_kws={"linestyle": "--"})
 plt.legend()
 plt.xlabel("log transformed action pair response time ")
-plt.show()
+plt.savefig("../images/plots/plot2.png")
+# plt.show()
 
 sns.set(context='talk', style="whitegrid", font_scale=1.5, rc={'figure.figsize': (36, 15)})
 
@@ -146,7 +157,8 @@ ax2.set_title("2. (Hint Request, Hint Request) pair for first Hint Request")
 ax2.set_xlabel("log transformed action pair response time")
 plt.legend()
 # plt.xlabel("log transformed action pair response time")
-plt.show()
+plt.savefig("../images/plots/plot3.png")
+# plt.show()
 
 fig, (ax1, ax2) = plt.subplots(ncols=2, sharey=True)
 
@@ -171,7 +183,8 @@ ax2.set_title("2. (Hint Request, Attempt) pair for first Hint Request")
 ax2.set_xlabel("log transformed action pair response time")
 plt.legend()
 # plt.xlabel("log transformed action pair response time")
-plt.show()
+plt.savefig("../images/plots/plot4.png")
+# plt.show()
 
 all_hint_attempt_incorrect = all_hint_attempt[all_hint_attempt.pr_answered_correctly_pair == 0]
 all_hint_attempt_correct = all_hint_attempt[all_hint_attempt.pr_answered_correctly_pair == 1]
@@ -196,7 +209,8 @@ ax2.set_title("2. (Hint Request, Attempt) pair for first Hint Request")
 ax2.set_xlabel("log transformed action pair response time")
 plt.legend()
 # plt.xlabel("log transformed action pair response time")
-plt.show()
+plt.savefig("../images/plots/plot5.png")
+# plt.show()
 
 # let us now plot estimate the effort using GMMs
 all_hint_action = pd.concat([all_hint_attempt, all_hint_hint])
@@ -211,7 +225,8 @@ sns.distplot(hint_action.log_action_action_pairs_time_taken.values, hist=True, k
 plt.legend()
 plt.title("hint_action RTD of students who asked for the first hint digested it and asked for the next hint \n z-score("
           "-3, 3)")
-plt.show()
+plt.savefig("../images/plots/plot6.png")
+# plt.show()
 
 clusters = 2
 
@@ -270,7 +285,8 @@ def generateCorr(df):
              "is_skill_builder", "assignment_wheel_spin", "completed", "prior_completion", "prior_percent_correct"
              ]].copy()
     sns.heatmap(df.corr(), annot=True)
-    plt.show()
+    plt.savefig("../images/plots/heatmaps.png")
+    # plt.show()
 
 
 generateCorr(hint_action)
