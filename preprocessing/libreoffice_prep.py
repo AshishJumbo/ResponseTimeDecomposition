@@ -36,11 +36,11 @@ main_df['pr_answered_correctly_pair'] = 0
 main_df['pr_answer_attempts_by_user'] = 0
 main_df['pr_hints_requested_by_user'] = 0
 
+# main_df.to_csv("../data/RTD_data_randomsample_20K_new.csv", index=False)
 main_df.to_csv("../data/RTD_data_randomsample_20K_new_.csv", index=False)
 
 # once the RTD_data_randomsample_20K is exported use the instructions in libreoffice.md to generate the feature
-# values; had to do this because it was taking too long to generate the feature values using python as Python by
-# default is a single threaded operation i.e. it uses single core
+# values; had to do this because it was taking too long to generate the feature values using python
 
 # 'ProblemSetStartedAction', 'ProblemStartedAction',
 #        'StudentResponseAction', 'ProblemFinishedAction',

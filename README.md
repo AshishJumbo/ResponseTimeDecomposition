@@ -13,16 +13,14 @@ Ashish Gurung
 
 -----------------------
 <h4> Analysis Replication Guide </h4>
-If you wish to replicate the code without going through preprocessing then download all the csv files from the google drive into the data folder in your project. Once downloaded run the 3 python files in the analysis section in the following order:
 
-1. exploratory_data_analysis_log_z.py
-    This will export the figures of the various action pairs interms of log transformed response time. 
-2. gmm_breakdown.py
-    We now train a Gaussian Mixture Model to estimate where a users' response time falls interms of the bimodal distrubution. 
-3. regression_analysis.py
-    We conduct a regression analysis to explore the correlation between two learning outcomes and inferred effort from the Gaussian Mixture Model.
+If you wish to replicate the code without going through preprocessing then download 3 csv files from [the drive](https://drive.google.com/drive/folders/1fRhyVEetIsgRdp-B8J5seH64FCHC2HMI?usp=sharing):
+1. RTD_data_randomsample_20K_new.csv
+2. hint_infos.csv
+3. assignment_problem_npc_infos_with_priors.csv
 
-***[NOTE: the 3 python files in the analysis folder will export more information than available in the paper. This was done to provide fellow researchers with an opportunity to explore other aspects in the data and possibly go into tangents that further expand on our findings from the exploratory analysis.]***
+Once you have saved the CSV in the data folder in your workspace. You need to run the *paper_results_replication_file.py* and the paper should be replicated. 
+***[NOTE: As our analysis was exploratory in nature the paper_results_replication_file.py file only facilitates replication of what we reported in the paper. The other files can provide insight into all the other aspects of the user behavior we had explored.]***
 
 ---------
 
