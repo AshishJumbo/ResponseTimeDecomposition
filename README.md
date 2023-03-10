@@ -1,4 +1,4 @@
-<h3 ><em>Response Time Decomposition (RTD)</em></h3>
+<h1 ><em>Response Time Decomposition (RTD)</em></h1>
 Exploring the response time decomposition of student action logs in ASSISTments.<br>
 Collaborators:<br> 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -12,19 +12,21 @@ Ashish Gurung
 <br>
 
 -----------------------
-<h4> Analysis Replication Guide </h4>
+<h2> Analysis Replication Guide </h2>
 
 If you wish to replicate the code without going through preprocessing then download 3 csv files from [the drive](https://drive.google.com/drive/folders/1fRhyVEetIsgRdp-B8J5seH64FCHC2HMI?usp=sharing):
 1. RTD_data_randomsample_20K_new.csv
 2. hint_infos.csv
 3. assignment_problem_npc_infos_with_priors.csv
 
-Once you have saved the CSV in the data folder in your workspace. You need to run the *paper_results_replication_file.py* and the paper should be replicated. 
+Once you have saved the CSV in the data folder in your workspace. You need to run the ***../analysis/paper_results_replication_file.py*** and the paper should be replicated. 
+
+
 ***[NOTE: As our analysis was exploratory in nature the paper_results_replication_file.py file only facilitates replication of what we reported in the paper. The other files can provide insight into all the other aspects of the user behavior we had explored.]***
 
 ---------
 
-<h4>The following is the order of execution of the files in the project for preprocessing:</h4>
+<h2>The following is the order of execution of the files in the project for preprocessing:</h2>
 <ol>
     <li>libreoffice_prep.py <br/>
         This is the first code base that sorts the data and ensures that everything is in 
@@ -87,8 +89,5 @@ Once you have saved the CSV in the data folder in your workspace. You need to ru
             </li>
         </ol>
         <hr>
-    </li>
-    <li>Run the exploratory_data_analysis.py<br/>
-        This analysis is still at it's infancy. 
     </li>
 </ol>
