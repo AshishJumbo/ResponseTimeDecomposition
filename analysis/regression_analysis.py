@@ -7,8 +7,8 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 from scipy import stats
 
-hint_action_GMM_npc = pd.read_csv("../data/hint_action_GMM_npc_.csv")
-all_hint_action_GMM_npc = pd.read_csv("../data/all_hint_action_GMM_npc_.csv")
+hint_action_GMM_npc = pd.read_csv("../data/hint_action_GMM_npc.csv")
+all_hint_action_GMM_npc = pd.read_csv("../data/all_hint_action_GMM_npc.csv")
 
 hint_action_GMM_npc['cluster'] = hint_action_GMM_npc['cluster'].map({1: 'low-efort', 0: 'high-effort'})
 all_hint_action_GMM_npc['cluster'] = all_hint_action_GMM_npc['cluster'].map({1: 'low-efort', 0: 'high-effort'})

@@ -50,7 +50,7 @@ test = hint_action[["action_action_pairs", "action_action_pairs_time_taken", "lo
                   "cluster", "high_effort", "low_effort", "next_problem_correctness", "is_skill_builder",
                   "assignment_wheel_spin", "completed"]].copy()
 
-hint_action.to_csv("../data/hint_action_GMM_npc_.csv", index=False)
+# hint_action.to_csv("../data/hint_action_GMM_npc.csv", index=False)
 
 sns.set(context="poster", style="whitegrid")
 sns.set(rc={'figure.figsize': (10, 8)})
@@ -96,6 +96,6 @@ test = all_hint_action[["action_action_pairs", "action_action_pairs_time_taken",
                   "cluster", "high_effort", "low_effort", "next_problem_correctness", "is_skill_builder",
                   "assignment_wheel_spin", "completed"]].copy()
 
-all_hint_action.to_csv("../data/all_hint_action_GMM_npc_.csv", index=False)
+# all_hint_action.to_csv("../data/all_hint_action_GMM_npc.csv", index=False)
 
 print("NOTE!! make sure the clusters are arranged in a descending order else the high/low effort will get reversed")
