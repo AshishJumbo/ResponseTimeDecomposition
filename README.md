@@ -19,7 +19,7 @@ If you wish to replicate the code without going through preprocessing then downl
 2. hint_infos.csv
 3. assignment_problem_npc_infos_with_priors.csv
 
-Once you have saved the CSV in the data folder in your workspace. You need to run the ***../analysis/paper_results_replication_file.py*** and the paper should be replicated. 
+Once you have saved the CSV in the data folder in your workspace. You need to run the <br/> ***../analysis/paper_results_replication_file.py*** <br/> and the results in the paper should be replicated. 
 
 
 ***[NOTE: As our analysis was exploratory in nature the paper_results_replication_file.py file only facilitates replication of what we reported in the paper. The other files can provide insight into all the other aspects of the user behavior we had explored.]***
