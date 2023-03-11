@@ -1,0 +1,82 @@
+Unless noted below, '50 Experiments+2022' (the “Dataset”) is licensed under the ASSISTments Public Data License v0.1 (the “License”) copied below. The Dataset is owned, copyrighted, and managed by the ASSISTments Foundation and by affiliation Worcester Polytechnic Institute as a joint collaboration.
+
+ASSISTments Public Data License v0.1
+
+Section 1 - Definitions
+    - Licensor means the ASSISTments Foundation and by affiliation Worcester Polytechnic Institute as a joint collaboration, granting the rights under the License.
+    - You mean the individual or entity exercising the rights under the License. Your has a corresponding meaning.
+    - Dataset means the file(s) containing data collected by the ASSISTments Foundation and their platforms.
+    - Paper means the published work the Dataset was originally prepared for.
+    - Work means the usage of the Dataset by You, including but not limited to a published work, software, documentation files, etc.
+    - DOI means a Digital Object Identifier.
+    - Non-Commercial means that the Dataset is obtained and used for purposes not primarily intended for or directed towards commercial advantage or monetary compensation.
+    - Remix and Transform means a translated, altered, arranged, transformed, or otherwise modified form of the Dataset.
+
+Section 2 - Terms
+
+You are granted by the Licensor a worldwide, royalty-free, non-sublicensable, non-exclusive, irrevocable license to obtain and use the Dataset for Non-Commercial purposes only expressly made subject to the following conditions.
+
+    1. Attribution
+        a. Rationale
+            i. We want you to cite our work and make it such that others can easily obtain it from the paper you have written.
+        b. Conditions
+            i. If You obtain or use the Dataset:
+                1. For any Work, You MUST:
+                    a. refer to the Dataset under the name specified in the License, or obtained from https://www.etrialstestbed.org/resources/featured-studies/dataset-papers if unavailable
+                    b. cite the Paper, if available, as a reference;
+                    c. cite the Dataset as a reference if the Paper does not contain a reference to the Dataset or is unavailable;
+                    d. provide a DOI, or a URI or hyperlink if unavailable, to the Dataset or the explicit storage location housing the Dataset
+    2. No Dataset Derivatives
+        a. Rationale
+            i. We don’t want you to give out the dataset for three major reasons. First, if you redistribute the dataset, there is no guarantee that the dataset will remain in the redistributed location. Second, we want others to cite our work. Finally, we do not want people to distribute altered versions of the dataset such that it provides false information about the data collected.
+        b. Conditions
+            i. You MAY NOT redistribute or republish the Dataset or any Remixes and Transformations.
+    3. No Dataset Deanonymization
+        a. Rationale
+            i. We do not want you using the dataset to identify personal information by linking it to other information users may put out. While we think it is impossible for you to identify any personal information, through an abundance of caution, if you discover any personally identifiable information, you need to destroy it and notify us.
+        b. Conditions
+            i. You MAY NOT obtain or use the Dataset to deanonymize personally identifiable information through any means, including but not limited to:
+                1. social media and messages;
+                2. supplemental documents;
+                3. Datasets.
+            ii. You MAY obtain or use the Dataset to link information between other datasets in prior works provided by the Licensor if:
+                1. the Dataset explicitly mentions the name and provides DOI, or a URI or hyperlink if unavailable, to another dataset or the explicit storage location housing the other dataset in a prior work provided by the Licensor;
+                2. You expressly meet the conditions of the License for the other dataset, excluding Section 2(3)(b)(ii)(1).
+            iii. If You are able to deanonymize the Dataset, You MUST:
+                1. email the Licensor at etrials@assistments.org with the following:
+                    a. a DOI, or a URI or hyperlink if unavailable, to the Dataset or the explicit storage location housing the Dataset;
+                    b. the Work, or a private URI or hyperlink to the Work, used to deanonymize the Dataset;
+                    c. an explanation of how the Dataset was deanonymized and what was deanonymized from the Dataset;
+                2. purge the deanonymized Dataset and the section of the Work containing the method and outcomes of the deanonymized Dataset after:
+                    a. email communication with the Licensor has ceased; or
+                    b. no email communication with the Licensor has been made within 30 days;
+                3. halt pursuit of or redact Work relating to the deanonymization of the Dataset.
+    4. Full Transparency
+        a. Rationale
+            i. Because there is a replication crisis (https://www.nature.com/articles/533452a), if you use our data, you must make it possible for others to reproduce your findings. This includes the code used to analyze the dataset and reproduce the numbers in the paper. If you did not use code, but instead used something like Excel Pivot Tables, then your ‘code’ is the exact directions someone else could follow to reproduce the work. Therefore, we require:
+        b. Conditions
+            i. You MUST make all Work openly accessible including, but not limited to:
+                1. the code used to obtain, Remix, Transform, and use the Dataset;
+                2. the outcomes of the Work;
+                3. the documentation associated with the Work.
+            ii. You MUST provide a copy of the Work to the Licensor through etrials@assistments.org
+
+Section 3 - Disclaimer of Warranties and Limitation of Liability
+
+    1. To the extent possible, the Licensor offers the Dataset as-is and as-available, and makes no representations or warranties of any kind concerning the Dataset, whether express, implied, statutory, or other. This includes, without limitation, warranties of title, merchantability, fitness for a particular purpose, non-infringement, absence of latent or other defects, accuracy, or the presence or absence of errors, whether or not known or discoverable.
+    2. To the extent possible, in no event will the Licensor be liable to You on any legal theory (including, without limitation, negligence) or otherwise for any direct, special, indirect, incidental, consequential, punitive, exemplary, or other losses, costs, expenses, or damages, arising out of the License or use of the Dataset, even if the Licensor has been advised of the possibility of such losses, costs, expenses, or damages.
+    3. The disclaimer of warranties and limitation of liability provided above shall be interpreted in a manner that, to the extent possible, most closely approximates an absolute disclaimed and waiver of all liability.
+
+Section 4 - Termination
+
+    1. If You fail to comply with the License, then Your rights under the License terminate automatically.
+    2. Where Your right to use the Dataset has terminated under Section 4(1), it reinstates:
+        a. automatically as of the date the violation is cured, provided it is cured within 30 days of Your discovery of the violation; or
+        b. upon express reinstatement by the Licensor.
+    3. If Your right is not reinstated under 4(2), then You MUST:
+        a. halt pursuit of or redact Work relating to the Dataset.
+
+Section 5 - Other Terms and Conditions
+
+    1. The Licensor shall not be bound by any additional or different terms or conditions communicated by You unless expressly agreed.
+    2. Any arrangements, understandings, or agreements regarding the Dataset not stated herein are separate from and independent of the terms and conditions of the License.

@@ -7,7 +7,7 @@ Dr. Anthony F. Botelho<br>
 Ashish Gurung
 
 [link to the data](https://drive.google.com/drive/folders/1fRhyVEetIsgRdp-B8J5seH64FCHC2HMI?usp=sharing)
-[NOTE: there are two files one preprocessed one regular. The preprocessed data is called RDT_...csv]
+[NOTE: While the code is available under the MIT license the dataset is provided through the different license that can be found [here](./DATA-LICENSE).]
 
 <br>
 
