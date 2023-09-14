@@ -2,9 +2,9 @@
 Exploring the response time decomposition of student action logs in ASSISTments.<br>
 Collaborators:<br> 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-Dr. Anthony F. Botelho<br>
+Anthony F. Botelho, Ph.D.<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-Ashish Gurung
+Ashish Gurung, Ph.D.
 
 [link to the data](https://drive.google.com/drive/folders/1fRhyVEetIsgRdp-B8J5seH64FCHC2HMI?usp=sharing)
 [NOTE: While the code is available under the MIT license the dataset is provided through a different license that can be found [here](./DATA-LICENSE).]
